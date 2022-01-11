@@ -9,6 +9,11 @@ const routes = [
     name: "Index",
     component: () => import("../views/index.vue"),
   },
+  {
+    path: "/recyclingGuide",
+    name: "RecyclingGuide",
+    component: () => import("../views/RecyclingGuide.vue"),
+  },
 ]
 
 const router = new VueRouter({
