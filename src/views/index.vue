@@ -42,7 +42,7 @@
         <van-icon name="balance-list" size="2.3rem" color="#75e7a2" />
         <span>预约订单</span>
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/rankingList">
         <van-icon name="graphic" size="2.3rem" color="#5ab2f3" />
         <span>榜单</span>
       </van-grid-item>
