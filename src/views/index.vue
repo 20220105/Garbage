@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 头部标题导航栏部分 -->
     <van-nav-bar title="首页" @click-left="reload">
       <template #left>
         <van-icon name="location-o" size="1.05rem" color="#fff" />
@@ -7,12 +8,15 @@
         <span v-else><template v-if="isRouterAlive">未定位</template></span>
       </template>
     </van-nav-bar>
+    <!-- 定位部分 -->
     <map-container @myEvent="getAddress" class="map" />
+    <!-- 轮播图 -->
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="(image, index) in images" :key="index">
         <img :src="image" alt="" />
       </van-swipe-item>
     </van-swipe>
+    <!-- 回收指南等 -->
     <van-notice-bar
       left-icon="volume-o"
       text="回收流程通知"
@@ -30,7 +34,7 @@
           <span>拍照识别</span>
         </van-grid-item>
       </van-uploader>
-      <van-grid-item>
+      <van-grid-item to="/homepage">
         <van-icon name="shop" size="2.3rem" color="#fac43a" />
         <span>环保商城</span>
       </van-grid-item>
@@ -44,11 +48,13 @@
       </van-grid-item>
     </van-grid>
     <div>
+      <!-- 搜索垃圾类别 -->
       <div class="lajifenlei">
         <h2>垃圾分类查询</h2>
         <h4>点击搜一搜,垃圾分类更简单</h4>
       </div>
       <div class="e-r">
+        <!-- 环保金 -->
         <div class="eco-gold">
           <van-notice-bar
             left-icon="gold-coin"
@@ -71,6 +77,7 @@
             </van-grid-item>
           </van-grid>
         </div>
+        <!-- 流程 -->
         <div class="recycling-process">
           <van-notice-bar
             left-icon="setting"
@@ -96,6 +103,7 @@
               <span>扫码收钱</span>
             </van-grid-item>
           </van-grid>
+          <!-- 小箭头 -->
           <div class="next">
             <van-icon name="arrow" size="1.5rem" color="#666" />
             <van-icon name="arrow" size="1.5rem" color="#666" />
@@ -104,6 +112,21 @@
         </div>
       </div>
     </div>
+    <!-- 底部导航栏 -->
+    <van-tabbar
+      class="bottom_nav"
+      :placeholder="true"
+      :safe-area-inset-bottom="true"
+      active-color="#25c89b"
+      inactive-color="#9D9D9D"
+      v-model="active"
+    >
+      <van-tabbar-item replace to="/" icon="wap-home">首页</van-tabbar-item>
+      <van-tabbar-item replace to="/" icon="column">订单</van-tabbar-item>
+      <van-tabbar-item replace to="/" icon="bell">一键预约</van-tabbar-item>
+      <van-tabbar-item replace to="/" icon="shop">商城</van-tabbar-item>
+      <van-tabbar-item replace to="/" icon="manager">我的</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -119,6 +142,7 @@ export default {
   },
   data() {
     return {
+      active: 0,
       address: "", //地理位置名称
       // 轮播图图片
       images: [
@@ -256,7 +280,7 @@ export default {
       background-color: rgb(243, 242, 242);
       > .van-icon {
         margin: 0 2rem;
-        bottom: 3.5rem;
+        bottom: 4.8rem;
       }
     }
   }
@@ -264,5 +288,11 @@ export default {
 .van-grid-item__content--center > h1 {
   font-weight: 300;
   margin: 0 0 1rem 0;
+}
+// 底部导航栏
+::v-deep .bottom_nav {
+  .van-icon {
+    font-size: 1.65rem;
+  }
 }
 </style>
