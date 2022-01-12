@@ -1,9 +1,10 @@
 <template>
   <div>
-    <van-nav-bar title="首页">
+    <van-nav-bar title="首页" @click-left="reload">
       <template #left>
         <van-icon name="location-o" size="1.05rem" color="#fff" />
-        <span>{{ address }}</span>
+        <span v-if="address">{{ address }}</span>
+        <span v-else><template v-if="isRouterAlive">未定位</template></span>
       </template>
     </van-nav-bar>
     <map-container @myEvent="getAddress" class="map" />
@@ -95,6 +96,11 @@
               <span>扫码收钱</span>
             </van-grid-item>
           </van-grid>
+          <div class="next">
+            <van-icon name="arrow" size="1.5rem" color="#666" />
+            <van-icon name="arrow" size="1.5rem" color="#666" />
+            <van-icon name="arrow" size="1.5rem" color="#666" />
+          </div>
         </div>
       </div>
     </div>
@@ -106,6 +112,11 @@ import MapContainer from "../components/MapContainer.vue"
 import { client } from "../utils/alioss"
 export default {
   components: { MapContainer },
+  provide() {
+    return {
+      reload: this.reload,
+    }
+  },
   data() {
     return {
       address: "", //地理位置名称
@@ -117,12 +128,19 @@ export default {
         "/rubbish_img/4.jpg",
         "/rubbish_img/5.jpg",
       ],
+      isRouterAlive: true, //用来局部刷新
     }
   },
   methods: {
     getAddress(val) {
       this.address = val
       console.log(val)
+    },
+    reload() {
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
@@ -225,9 +243,20 @@ export default {
     margin: 0.5rem 0;
   }
   .recycling-process {
+    position: relative;
     .van-grid-item__content--center {
       span {
         margin-top: 0.95rem;
+      }
+    }
+    .next {
+      height: 0;
+      margin-left: 3.5rem;
+      position: relative;
+      background-color: rgb(243, 242, 242);
+      > .van-icon {
+        margin: 0 2rem;
+        bottom: 3.5rem;
       }
     }
   }
