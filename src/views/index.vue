@@ -122,7 +122,9 @@
       v-model="active"
     >
       <van-tabbar-item replace to="/" icon="wap-home">首页</van-tabbar-item>
-      <van-tabbar-item replace to="/" icon="column">订单</van-tabbar-item>
+      <van-tabbar-item replace to="/the_order" icon="column"
+        >订单</van-tabbar-item
+      >
       <van-tabbar-item replace to="/" icon="bell">一键预约</van-tabbar-item>
       <van-tabbar-item replace to="/" icon="shop">商城</van-tabbar-item>
       <van-tabbar-item replace to="/" icon="manager">我的</van-tabbar-item>
