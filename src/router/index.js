@@ -5,6 +5,26 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: "/ssk",
+    name: "Ssk",
+    component: () => import("../syan/Ssk.vue"),
+  },
+  {
+    path: "/mine",
+    name: "Mine",
+    component: () => import("../views/Mine.vue"),
+  },
+  {
+    path: "/category",
+    name: "Category",
+    component: () => import("../views/Category.vue"),
+  },
+  {
+    path: "/homepage",
+    name: "HomePage",
+    component: () => import("../views/HomePage.vue"),
+  },
+  {
     path: "/",
     name: "Index",
     component: () => import("../views/index.vue"),
