@@ -1,23 +1,11 @@
 <template>
   <div>
     <!-- 侧边栏 -->
-    <!-- <van-nav-bar
-      title=""
-      fixed
-      placeholder
-      left-arrow
-      @click-left="onClickLeft"
-    >
-</van-nav-bar> -->
-    <div class="tou">
-      <van-icon name="arrow-left"
-       to="/" 
-       size="1.8rem"
-       />
-      <!-- 输入框 -->
-      <!-- <van-image :src="require('../assets/img/q/ssk.jpg')" fixed /> -->
-      <!-- 输入框结束 -->
-    </div>
+    <van-nav-bar left-arrow fixed>
+      <template #left>
+        <van-search v-model="value" placeholder="请输入搜索关键词" />
+      </template>
+    </van-nav-bar>
 
     <p>这是第一个</p>
     <van-tabbar v-model="active" active-color="#25c89b" fixed>
@@ -39,6 +27,7 @@ export default {
   data() {
     return {
       active: 0,
+      value: "",
     };
   },
   methods: {
@@ -56,34 +45,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .van-icon-arrow-left:before{
-  margin: 0.7rem 0 0 0;
-  color: aliceblue;
-}
-.tou {
-  width: 100%;
-  height: 3rem;
+::v-deep .van-nav-bar {
   background-color: #25c89b;
 }
-::v-deep .van-nav-bar__content {
-  background-color: #25c89b;
+//标题样式
+::v-deep .van-nav-bar__title {
+  color: #fff;
 }
-::v-deep .van-nav-bar__left {
-  color: aliceblue !important;
+// 头部返回按钮旁边的文字
+::v-deep .van-nav-bar__text {
+  color: #fff;
 }
-::v-deep .van-image__img {
-  margin-top: 0.6rem;
-  margin-left: 3rem;
-  width: 60%;
-  height: 60%;
-  // position: absolute;
-  // top: 50%;
-  // transform: translateY(-50%);
+//头部的返回按钮样式
+::v-deep .van-nav-bar__arrow {
+  color: #fff;
 }
-::deep .van-image {
-  // position: absolute !important;
+body {
 }
-v-deep .van-nav-bar__content {
-  // position: absolute !important;
+// .sskimg {
+//   position: relative;
+//   img {
+//     width: 12rem;
+//     position: absolute;
+
+//     // transform: translateY(-50%);
+//     margin: 0 0 0 0;
+//   }
+// }
+::v-deep .van-search {
+  width: 14rem;
+  height: 1rem;
+  margin: 0 0 0 0;
+  padding: 1rem 0;
+}
+::v-deep.van-search .van-cell {
+  padding: 0 1rem;
+}
+::v-deep .van-nav-bar__left,
+.van-nav-bar__right {
+  left: 3rem !important;
+  // padding: 0 1rem;
 }
 </style>
