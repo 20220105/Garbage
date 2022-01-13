@@ -54,7 +54,7 @@
                   src="/head_portrait/002.jpg"
                   fit="cover"
                 />
-                <span>避嫌</span>
+                <span>常山赵子龙</span>
                 <span>0.00</span>
               </div>
               <div class="card">
@@ -118,10 +118,10 @@
                   round
                   width="25%"
                   height="25%"
-                  src="/head_portrait/006.jpg"
+                  src="/head_portrait/007.jpg"
                   fit="cover"
                 />
-                <span>耳东陈</span>
+                <span>百事可乐</span>
                 <span>0.00</span>
               </div>
               <div class="card">
@@ -129,10 +129,32 @@
                   round
                   width="25%"
                   height="25%"
-                  src="/head_portrait/006.jpg"
+                  src="/head_portrait/008.jpg"
                   fit="cover"
                 />
-                <span>耳东陈</span>
+                <span>!</span>
+                <span>0.00</span>
+              </div>
+              <div class="card">
+                <van-image
+                  round
+                  width="25%"
+                  height="25%"
+                  src="/head_portrait/009.jpg"
+                  fit="cover"
+                />
+                <span>。</span>
+                <span>0.00</span>
+              </div>
+              <div class="card">
+                <van-image
+                  round
+                  width="25%"
+                  height="25%"
+                  src="/head_portrait/010.jpg"
+                  fit="cover"
+                />
+                <span>.</span>
                 <span>0.00</span>
               </div>
             </template>
@@ -246,6 +268,8 @@ export default {
     position: relative;
     font-size: 1.1rem;
     margin: 0.5rem 0;
+    background-color: #f0f0f0;
+    border-radius: 0.5rem 0 0 0.5rem;
     span {
       position: relative;
       transform: translateY(-55%);
@@ -261,6 +285,9 @@ export default {
       left: 17.9rem;
       bottom: -0.25rem;
     }
+  }
+  :nth-child(odd) {
+    background-color: #fbfafa;
   }
 }
 </style>
