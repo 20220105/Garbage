@@ -2,8 +2,17 @@
   <div>
     <!-- 侧边栏 -->
     <van-nav-bar left-arrow fixed>
-      <template #left>
-        <van-search v-model="value" placeholder="请输入搜索关键词" />
+      <template #title>
+        <van-search
+          v-model="value"
+          placeholder="请输入搜索关键词"
+          shape="round"
+          background="#25c89b"
+          @focus="onFocus"
+        />
+      </template>
+      <template #right>
+        <van-icon name="share" size="25" color="#fff" />
       </template>
     </van-nav-bar>
 
@@ -39,6 +48,9 @@ export default {
     },
     onClickRight() {
       Toast("按钮");
+    },
+    onFocus() {
+      this.$router.push("/");
     },
   },
 };
@@ -80,10 +92,5 @@ body {
 }
 ::v-deep.van-search .van-cell {
   padding: 0 1rem;
-}
-::v-deep .van-nav-bar__left,
-.van-nav-bar__right {
-  left: 3rem !important;
-  // padding: 0 1rem;
 }
 </style>
