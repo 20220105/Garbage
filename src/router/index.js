@@ -5,6 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/subscribe',
+    name: 'Subscribe',
+    component: () => import('../views/subscribe.vue'),
+  },
+  {
     path:"/me",
     name:"Me",
     component:()=>import('../views/Me.vue')
