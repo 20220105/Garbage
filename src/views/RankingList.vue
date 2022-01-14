@@ -3,7 +3,6 @@
     <div :style="{ backgroundColor: '#25e69b' }">
       <van-nav-bar
         title="回收价值排行榜"
-        left-text="返回"
         left-arrow
         @click-left="onClickLeft"
       />
