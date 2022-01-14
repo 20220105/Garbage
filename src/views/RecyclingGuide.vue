@@ -1,11 +1,6 @@
 <template>
   <div>
-    <van-nav-bar
-      title="回收指南"
-      left-text="返回"
-      left-arrow
-      @click-left="onClickLeft"
-    />
+    <van-nav-bar title="回收指南" left-arrow @click-left="onClickLeft" />
     <div class="text">
       <van-divider :style="{ color: '#666', borderColor: '#666' }" />
       1吨废纸可制造出850公斤好纸，节省木材4立方米，比等量生产减少污染74%;<br />

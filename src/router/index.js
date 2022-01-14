@@ -5,14 +5,44 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/the_order',
-    name: 'The_order',
-    component: () => import('../views/The_order.vue'),
+    path: "/garbage",
+    name: "Garbage",
+    component: () => import("@/views/Garbage.vue"),
   },
   {
-    path: '/nav',
-    name: 'Nav',
-    component: () => import('../text/nav.vue'),
+    path: "/subscribe",
+    name: "Subscribe",
+    component: () => import("../views/subscribe.vue"),
+  },
+  {
+    path: "/me",
+    name: "Me",
+    component: () => import("../views/Me.vue"),
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/Register.vue"),
+  },
+  {
+    path: "/rankingList",
+    name: "RankingList",
+    component: () => import("../views/RankingList.vue"),
+  },
+  {
+    path: "/the_order",
+    name: "The_order",
+    component: () => import("../views/The_order.vue"),
+  },
+  {
+    path: "/nav",
+    name: "Nav",
+    component: () => import("../text/nav.vue"),
   },
   {
     path: "/ssk",

@@ -104,12 +104,27 @@ export default {
   width: 6rem;
   height: 100%;
 }
-::v-deep .zheng{
+::v-deep .zheng {
   float: left !important;
   height: 8rem;
   width: 5rem;
 }
-::v-deep .you{
+::v-deep .you {
   // padding: 1rem;
+}
+::v-deep .van-nav-bar {
+  background-color: #25c89b;
+}
+//标题样式
+::v-deep .van-nav-bar__title {
+  color: #fff;
+}
+// 头部返回按钮旁边的文字
+::v-deep .van-nav-bar__text {
+  color: #fff;
+}
+//头部的返回按钮样式
+::v-deep .van-nav-bar__arrow {
+  color: #fff;
 }
 </style>

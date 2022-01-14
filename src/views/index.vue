@@ -42,16 +42,17 @@
         <van-icon name="balance-list" size="2.3rem" color="#75e7a2" />
         <span>预约订单</span>
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/rankingList">
         <van-icon name="graphic" size="2.3rem" color="#5ab2f3" />
         <span>榜单</span>
       </van-grid-item>
     </van-grid>
     <div>
       <!-- 搜索垃圾类别 -->
-      <div class="lajifenlei">
+      <div class="lajifenlei" @click="into_garbage">
         <h2>垃圾分类查询</h2>
         <h4>点击搜一搜,垃圾分类更简单</h4>
+        <van-icon name="search" size="36" color="#fff" />
       </div>
       <div class="e-r">
         <!-- 环保金 -->
@@ -126,7 +127,7 @@
         >订单</van-tabbar-item
       >
       <van-tabbar-item replace to="/" icon="bell">一键预约</van-tabbar-item>
-      <van-tabbar-item replace to="/" icon="shop">商城</van-tabbar-item>
+      <van-tabbar-item replace to="/homepage" icon="shop">商城</van-tabbar-item>
       <van-tabbar-item replace to="/" icon="manager">我的</van-tabbar-item>
     </van-tabbar>
   </div>
@@ -158,6 +159,9 @@ export default {
     }
   },
   methods: {
+    into_garbage() {
+      this.$router.push("/garbage")
+    },
     getAddress(val) {
       this.address = val
       console.log(val)
@@ -243,6 +247,7 @@ export default {
   }
 }
 .lajifenlei {
+  position: relative;
   width: 100vw;
   height: 5rem;
   background-color: #25c89b;
@@ -256,6 +261,12 @@ export default {
   }
   h2 {
     padding-top: 0.55rem;
+  }
+  i {
+    position: absolute;
+    top: 1.3rem;
+    left: 2.5rem;
+    font-weight: 900;
   }
 }
 .e-r {
