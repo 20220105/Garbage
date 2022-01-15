@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- v-model="active" -->
-    <van-tabs swipeable>
+    <van-tabs v-model="active" swipeable>
       <van-tab v-for="index in 4" :key="index" :title="'选项 ' + index">
         内容 {{ index }}
       </van-tab>

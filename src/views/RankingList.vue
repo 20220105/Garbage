@@ -3,7 +3,6 @@
     <div :style="{ backgroundColor: '#25e69b' }">
       <van-nav-bar
         title="回收价值排行榜"
-        left-text="返回"
         left-arrow
         @click-left="onClickLeft"
       />
@@ -44,96 +43,18 @@
               <span>排名</span>
             </template>
             <template #label>
-              <div>暂未排名</div>
+              <div v-if="!rankingList">暂未排名</div>
               <!-- 排名 -->
-              <div class="card">
+              <div class="card" v-for="(item, i) in rankingList" :key="i">
                 <van-image
                   round
                   width="25%"
                   height="25%"
-                  src="/head_portrait/002.jpg"
+                  :src="item.client_head_url"
                   fit="cover"
                 />
-                <span>避嫌</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/001.jpg"
-                  fit="cover"
-                />
-                <span>人间不值得</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/003.jpg"
-                  fit="cover"
-                />
-                <span>派大星</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/004.jpg"
-                  fit="cover"
-                />
-                <span>Nil</span>
-                <span>0.00</span>
-              </div>
-
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/005.jpg"
-                  fit="cover"
-                />
-                <span>命运观测者</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/006.jpg"
-                  fit="cover"
-                />
-                <span>耳东陈</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/006.jpg"
-                  fit="cover"
-                />
-                <span>耳东陈</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/006.jpg"
-                  fit="cover"
-                />
-                <span>耳东陈</span>
-                <span>0.00</span>
+                <span>{{ item.nickname }}</span>
+                <span>{{ item.money_amoun | xiaoshudian }}</span>
               </div>
             </template>
           </van-cell>
@@ -159,6 +80,7 @@ export default {
   data() {
     return {
       h: "",
+      rankingList: [],
     }
   },
   methods: {
@@ -175,9 +97,28 @@ export default {
       this.h = h
       console.log(this.h)
     },
+    // page页数 pageNum每页多少数据
+    getRankingList(page, pageNum) {
+      let url = `/rankingList/${page}/${pageNum}`
+      this.axios.get(url).then((res) => {
+        this.rankingList.push(...res.data.results)
+        console.log(this.rankingList)
+      })
+    },
   },
   mounted() {
     this.windowHeight()
+    this.getRankingList(1, 6)
+    this.getRankingList(2, 6)
+  },
+  filters: {
+    // 过滤器
+    // 保留两位小数点
+    xiaoshudian(value) {
+      var toFixedNum = Number(value).toFixed(3)
+      var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1)
+      return realVal
+    },
   },
 }
 </script>
@@ -246,6 +187,8 @@ export default {
     position: relative;
     font-size: 1.1rem;
     margin: 0.5rem 0;
+    background-color: #f0f0f0;
+    border-radius: 0.5rem 0 0 0.5rem;
     span {
       position: relative;
       transform: translateY(-55%);
@@ -258,9 +201,15 @@ export default {
     }
     :nth-child(3) {
       position: absolute;
-      left: 17.9rem;
+      left: 16.3rem;
       bottom: -0.25rem;
+      display: inline-block;
+      width: 5rem;
+      text-align: center;
     }
+  }
+  :nth-child(odd) {
+    background-color: #fbfafa;
   }
 }
 </style>

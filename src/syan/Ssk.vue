@@ -21,6 +21,8 @@
 </template>
 <script>
 import courseData from "../data/course";
+// import { throttle } from "../libs/utils";   //这里报错了  是路径错误还是 utils.js写错了
+
 export default {
   name: "App",
   data() {
@@ -38,7 +40,7 @@ export default {
           return item;
         }
       });
-    },
+    }, //throttle(节流,这里错误了)
   },
 };
 </script>
