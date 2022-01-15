@@ -4,6 +4,12 @@ import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
 const routes = [
+
+  {
+    path:'/disclaimers',
+    name:"disclaimers",
+    component: () => import("../views/Disclaimers.vue"),
+  },
   {
     path: "/garbage",
     name: "Garbage",
