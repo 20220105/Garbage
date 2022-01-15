@@ -4,7 +4,11 @@ import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
 const routes = [
-
+  {
+    path:'/addressedit',
+    name:"addressedit",
+    component: () => import("../views/AddressEdit.vue"),
+  },
   {
     path:'/disclaimers',
     name:"disclaimers",
