@@ -43,118 +43,18 @@
               <span>排名</span>
             </template>
             <template #label>
-              <div>暂未排名</div>
+              <div v-if="!rankingList">暂未排名</div>
               <!-- 排名 -->
-              <div class="card">
+              <div class="card" v-for="(item, i) in rankingList" :key="i">
                 <van-image
                   round
                   width="25%"
                   height="25%"
-                  src="/head_portrait/002.jpg"
+                  :src="item.client_head_url"
                   fit="cover"
                 />
-                <span>常山赵子龙</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/001.jpg"
-                  fit="cover"
-                />
-                <span>人间不值得</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/003.jpg"
-                  fit="cover"
-                />
-                <span>派大星</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/004.jpg"
-                  fit="cover"
-                />
-                <span>Nil</span>
-                <span>0.00</span>
-              </div>
-
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/005.jpg"
-                  fit="cover"
-                />
-                <span>命运观测者</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/006.jpg"
-                  fit="cover"
-                />
-                <span>耳东陈</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/007.jpg"
-                  fit="cover"
-                />
-                <span>百事可乐</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/008.jpg"
-                  fit="cover"
-                />
-                <span>!</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/009.jpg"
-                  fit="cover"
-                />
-                <span>。</span>
-                <span>0.00</span>
-              </div>
-              <div class="card">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  src="/head_portrait/010.jpg"
-                  fit="cover"
-                />
-                <span>.</span>
-                <span>0.00</span>
+                <span>{{ item.nickname }}</span>
+                <span>{{ item.money_amoun }}</span>
               </div>
             </template>
           </van-cell>
@@ -180,6 +80,7 @@ export default {
   data() {
     return {
       h: "",
+      rankingList: [],
     }
   },
   methods: {
@@ -196,9 +97,18 @@ export default {
       this.h = h
       console.log(this.h)
     },
+    getRankingList(page, pageNum) {
+      let url = `/rankingList/${page}/${pageNum}`
+      this.axios.get(url).then((res) => {
+        this.rankingList.push(...res.data.results)
+        console.log(this.rankingList)
+      })
+    },
   },
   mounted() {
     this.windowHeight()
+    this.getRankingList(1, 6)
+    this.getRankingList(7, 6)
   },
 }
 </script>
@@ -281,8 +191,11 @@ export default {
     }
     :nth-child(3) {
       position: absolute;
-      left: 17.9rem;
+      left: 15.9rem;
       bottom: -0.25rem;
+      width: 5rem;
+      display: inline-block;
+      margin: auto;
     }
   }
   :nth-child(odd) {
