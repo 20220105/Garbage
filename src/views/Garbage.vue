@@ -19,10 +19,30 @@
             <div @click="onSearch" style="border-radius: 1.1rem">查询</div>
           </template>
         </van-search>
+
+        <div class="card-1">
+          <img src="../assets/img/ljfl_search/001.png" alt="" width="100%" />
+          <div>
+            <van-notice-bar
+              left-icon="arrow"
+              text="正确合理的进行垃圾分类"
+              background="#fff"
+              color="#000"
+            />
+          </div>
+          <div class="text">
+            <div>
+              <p>营造良好的生活环境</p>
+              <p>为全球绿色贡献一份力量</p>
+              <p>智能垃圾分类查询</p>
+            </div>
+            <div>
+              <img src="../assets/img/ljfl_search/002.jpg" alt="" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        
-      </div>
+      <div></div>
       <!-- 用来写其它的v-if -->
       <div></div>
     </div>
@@ -101,5 +121,40 @@ export default {
       border-radius: 0 0 1.5rem 1.5rem;
     }
   }
+}
+.card-1 {
+  background-color: #fff;
+  margin-top: 1rem;
+  border-radius: 1.5rem;
+  img {
+    margin: 3rem 0 2.8rem 0;
+  }
+}
+.text {
+  display: flex;
+  :nth-child(1) {
+    width: 65%;
+    height: 2rem;
+    // background-color: red;
+  }
+  :nth-child(2) {
+    width: 35%;
+    // height: 2rem;
+    // background-color: yellow;
+    img {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border-radius: 0 0 1.5rem 0;
+    }
+  }
+}
+p {
+  overflow: hidden;
+  margin: 0.5rem 0 0 2.5rem;
+  padding: 0;
+  width: 100% !important;
+  height: 1.4rem !important;
+  font-weight: 500;
 }
 </style>
