@@ -54,7 +54,7 @@
                   fit="cover"
                 />
                 <span>{{ item.nickname }}</span>
-                <span>{{ item.money_amoun }}</span>
+                <span>{{ item.money_amoun | xiaoshudian }}</span>
               </div>
             </template>
           </van-cell>
@@ -97,6 +97,7 @@ export default {
       this.h = h
       console.log(this.h)
     },
+    // page页数 pageNum每页多少数据
     getRankingList(page, pageNum) {
       let url = `/rankingList/${page}/${pageNum}`
       this.axios.get(url).then((res) => {
@@ -108,7 +109,16 @@ export default {
   mounted() {
     this.windowHeight()
     this.getRankingList(1, 6)
-    this.getRankingList(7, 6)
+    this.getRankingList(2, 6)
+  },
+  filters: {
+    // 过滤器
+    // 保留两位小数点
+    xiaoshudian(value) {
+      var toFixedNum = Number(value).toFixed(3)
+      var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1)
+      return realVal
+    },
   },
 }
 </script>
@@ -191,11 +201,11 @@ export default {
     }
     :nth-child(3) {
       position: absolute;
-      left: 15.9rem;
+      left: 16.3rem;
       bottom: -0.25rem;
-      width: 5rem;
       display: inline-block;
-      margin: auto;
+      width: 5rem;
+      text-align: center;
     }
   }
   :nth-child(odd) {
