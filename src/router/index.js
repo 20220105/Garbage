@@ -15,6 +15,11 @@ const routes = [
     component: () => import("../views/Disclaimers.vue"),
   },
   {
+    path: "/recyclingadd",
+    name: "recyclingadd",
+    component: () => import("../views/Recyclingadd.vue"),
+  },
+  {
     path: "/garbage",
     name: "Garbage",
     component: () => import("@/views/Garbage.vue"),

@@ -46,7 +46,7 @@
   },
   methods: {
     async searchPoi(val,area){
-      let res = await this.$axios.get('https://restapi.amap.com/v3/place/text?parameters',{
+      let res = await this.axios.get('https://restapi.amap.com/v3/place/text?parameters',{
         params:{
           key: WebServiceKey,
           keywords: val,
