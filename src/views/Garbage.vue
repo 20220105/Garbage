@@ -10,8 +10,13 @@
           color="#25c89b"
         />
         <van-search
+          v-model="value"
           shape="round"
           show-action
+          maxlength="30"
+          autofocus="true"
+          clearable
+          clear-trigger="focus"
           placeholder="请输入搜索关键词"
           @search="onSearch"
         >
@@ -54,6 +59,7 @@ export default {
   data() {
     return {
       h: "",
+      value: "",
     }
   },
   methods: {
