@@ -54,7 +54,7 @@
                   fit="cover"
                 />
                 <span>{{ item.nickname }}</span>
-                <span>{{ item.money_amoun | xiaoshudian }}</span>
+                <span>￥{{ item.money_amoun | xiaoshudian }}</span>
               </div>
             </template>
           </van-cell>
@@ -201,7 +201,7 @@ export default {
     }
     :nth-child(3) {
       position: absolute;
-      left: 16.3rem;
+      left: 15.3rem;
       bottom: -0.25rem;
       display: inline-block;
       width: 5rem;
