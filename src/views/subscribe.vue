@@ -471,7 +471,7 @@ export default {
   position: relative;
 }
 .block {
-  width: 100%;
+  // width: 100%;
   height: auto;
   background-color: #ffffff;
   padding: 1.5rem 1rem 0 1.5rem;
