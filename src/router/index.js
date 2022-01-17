@@ -5,6 +5,16 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: "/results",
+    name: "Results",
+    component: () => import('../views/Results.vue')
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: () => import('../views/Search.vue')
+  },
+  {
     path:"/me",
     name:"Me",
     component:()=>import('../views/Me.vue')
