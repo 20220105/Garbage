@@ -15,19 +15,49 @@ const routes = [
     component: () => import('../views/Search.vue')
   },
   {
-    path:"/me",
-    name:"Me",
-    component:()=>import('../views/Me.vue')
+    path: "/me",
+    name: "Me",
+    component: () => import('../views/Me.vue')
   },
   {
-    path:"/login",
-    name:"Login",
-    component:()=>import("../views/Login.vue")
+    path:'/addressedit',
+    name:"addressedit",
+    component: () => import("../views/AddressEdit.vue"),
   },
   {
-    path:"/register",
-    name:"Register",
-    component:()=>import("../views/Register.vue")
+    path:'/disclaimers',
+    name:"disclaimers",
+    component: () => import("../views/Disclaimers.vue"),
+  },
+  {
+    path: "/recyclingadd",
+    name: "recyclingadd",
+    component: () => import("../views/Recyclingadd.vue"),
+  },
+  {
+    path: "/garbage",
+    name: "Garbage",
+    component: () => import("@/views/Garbage.vue"),
+  },
+  {
+    path: "/subscribe",
+    name: "Subscribe",
+    component: () => import("../views/subscribe.vue"),
+  },
+  {
+    path: "/me",
+    name: "Me",
+    component: () => import("../views/Me.vue"),
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/Register.vue"),
   },
   {
     path: "/rankingList",

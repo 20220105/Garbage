@@ -1,0 +1,67 @@
+<template>
+    <div>
+<van-nav-bar
+  title="回收地址"
+  left-text="返回"
+  left-arrow
+  @click-left="onClickLeft"
+/>
+<van-address-list
+  v-model="chosenAddressId"
+  :list="list"
+  default-tag-text="默认"
+  @add="onAdd"
+  @edit="onEdit"
+  @select="onSelect"
+/>
+    </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        chosenAddressId: ''
+      };
+    },
+    computed:{
+      list(){
+        return this.$store.state.address.address.map(val=>{
+          let temp = val
+          temp.address = temp.addressDetail
+          return temp
+        })
+      },
+      currentSelect(){
+        return this.$store.state.address.currentSelectId
+      }
+    },
+    mounted(){
+      this.chosenAddressId = this.currentSelect
+    },
+    methods: {
+      onClickLeft(){
+        this.$router.push('/subscribe')
+      },
+      onAdd() {
+        this.$router.push('/addressedit')
+      },
+      onEdit(item, index) {
+        this.$router.push({name:'addressedit',params:{id:index}})
+      },
+      onSelect(item,index){
+        this.$store.commit('address/changeSelection',index.toString())
+      }
+    },
+  };
+</script>
+<style scoped>
+::v-deep .van-address-list__add{
+  background-color:#25c89b !important;
+  border-color:#25c89b !important;
+}
+::v-deep .van-radio__icon--checked i{
+  background-color: #25c89b !important;
+  border-color:#25c89b !important;
+}
+</style>

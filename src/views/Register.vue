@@ -11,6 +11,7 @@
         <van-field type="password" v-model="pwd" @blur.native.capture="checkpwd" label="密码" />
         <van-field type="password" v-model="repwd" @blur.native.capture="checkRepwd" label="重复密码" />
         <van-field type="text" v-model="nickname" @blur.native.capture="checkNickName" label="输入昵称" />
+        <van-field type="text" label="输入手机号"/>
         <van-button @click="checkForm" type="primary" size="large">快速注册</van-button>
     </div>
 </template>
@@ -61,13 +62,7 @@ export default {
             }
         },
         checkNickName(){
-            if(this.value.length!=0){
-                  this.nicknameState='success'
-                  return true
-            }else{ //验证失败
-                this.nicknameState='error'
-                return false
-            }
+
         },
         checkForm(){ //验证表单
             if(this.checkName()&&this.checkPwd()&&this.checkRepwd()&&this.checkName()){
