@@ -4,7 +4,7 @@
     <van-nav-bar title="回收预约"></van-nav-bar>
     <div class="block">
       <div class="nav">
-          <!-- 文字左侧图标 -->
+        <!-- 文字左侧图标 -->
         <div class="nav_icon">
           <div class="nav_icon2"></div>
           <div class="nav_icon1"></div>
@@ -59,7 +59,7 @@
       </div>
     </div>
     <van-divider></van-divider>
-<!-- 预估重量 -->
+    <!-- 预估重量 -->
     <div class="block" style="padding: 0 1rem 0 1rem">
       <div class="nav">
         <div class="nav_icon">
@@ -82,7 +82,7 @@
             {{ item.range }}
           </WeightRange>
         </div>
-<!-- 注意事项 -->
+        <!-- 注意事项 -->
         <div class="item">
           <van-icon
             name="warning"
@@ -93,144 +93,147 @@
           <div class="title">注意事项：小于10公斤暂不保证上门回收</div>
         </div>
       </div>
-    <!-- 底部导航栏 -->
-    <van-tabbar
-      class="bottom_nav"
-      :placeholder="true"
-      :safe-area-inset-bottom="true"
-      active-color="#25c89b"
-      inactive-color="#9D9D9D"
-      v-model="active"
-    >
-      <van-tabbar-item replace to="/" icon="wap-home">首页</van-tabbar-item>
-      <van-tabbar-item replace to="/the_order" icon="column"
-        >订单</van-tabbar-item
-      >
-      <van-tabbar-item replace to="/subscribe" icon="bell">一键预约</van-tabbar-item>
-      <van-tabbar-item replace to="/homepage" icon="shop">商城</van-tabbar-item>
-      <van-tabbar-item replace to="/me" icon="manager">我的</van-tabbar-item>
-    </van-tabbar>
-    </div>
-   
-    <van-divider></van-divider>
-    <!-- 上门时间 -->
-    <div class="block" style="padding: 0 1rem 0 1rem">
-      <div class="content">
-        <div class="item">
-          <van-icon
-            name="clock"
-            color="#C0C0C0"
-            size="19px"
-            class="item_icon"
-          ></van-icon>
-          <div class="title">上门时间</div>
-          <div class="flex_title">
-            <div
-              :class="{ content: true, active: servicetime != '' }"
-              @click="timePickerShow = true"
-            >
-            <!-- 服务时间是否为空,非空添加服务时间 -->
-              {{ servicetime != "" ? formattime : "请选择上门时间" }}
+      <van-divider></van-divider>
+      <!-- 上门时间 -->
+      <div class="block" style="padding: 0 1rem 0 1rem">
+        <div class="content">
+          <div class="item">
+            <van-icon
+              name="clock"
+              color="#C0C0C0"
+              size="19px"
+              class="item_icon"
+            ></van-icon>
+            <div class="title">上门时间</div>
+            <div class="flex_title">
+              <div
+                :class="{ content: true, active: servicetime != '' }"
+                @click="timePickerShow = true"
+              >
+                <!-- 服务时间是否为空,非空添加服务时间 -->
+                {{ servicetime != "" ? formattime : "请选择上门时间" }}
+              </div>
+              <div
+                v-if="timePickerShow"
+                style="
+                  position: fixed;
+                  left: 0;
+                  top: 0;
+                  width: 100vw;
+                  height: 100vh;
+                  background-color: rgba(0, 0, 0, 0.3);
+                  z-index: 11;
+                "
+              >
+                <!-- 客户选择预约时间  在vant组件的基础上通过传入filter函数,对选项数组进行过滤 -->
+                <van-datetime-picker
+                  style="position: absolute; width: 100%; left: 0; bottom: 0"
+                  show-toolbar
+                  type="datehour"
+                  v-model="servicetime"
+                  @confirm="timePickerChange"
+                  :min-date="now"
+                  :filter="filter"
+                  @cancel="timePickerShow = false"
+                />
+              </div>
+              <van-icon name="arrow" color="#c0c0c0" size="16px"></van-icon>
             </div>
-            <div
-              v-if="timePickerShow"
-              style="
-                position: fixed;
-                left: 0;
-                top: 0;
-                width: 100vw;
-                height: 100vh;
-                background-color: rgba(0, 0, 0, 0.3);
-                z-index: 11;
-              "
-            >
-            <!-- 客户选择预约时间  在vant组件的基础上通过传入filter函数,对选项数组进行过滤 -->
-              <van-datetime-picker
-                style="position: absolute; width: 100%; left: 0; bottom: 0"
-                show-toolbar
-                type="datehour"
-                v-model="servicetime"
-                @confirm="timePickerChange"
-                :min-date="now"
-                :filter="filter"
-                @cancel="timePickerShow = false"
-              />
-            </div>
-            <van-icon name="arrow" color="#c0c0c0" size="16px"></van-icon>
           </div>
-        </div>
-        <!-- <van-divider></van-divider> -->
-        <!-- 预约地址 -->
-        <div class="item">
-          <van-icon
-            name="location"
-            color="#C0C0C0"
-            size="19px"
-            class="item_icon"
-          ></van-icon>
-          <div class="title">预约地址</div>
-          <div class="flex_title">
-            <div
-              :class="{ content: true, active: currentAddress != '' }"
-              @click="changeAddress"
-            >
-              {{ currentAddress != "" ? currentAddress : "请选择预约地址" }}
+          <!-- <van-divider></van-divider> -->
+          <!-- 预约地址 -->
+          <div class="item">
+            <van-icon
+              name="location"
+              color="#C0C0C0"
+              size="19px"
+              class="item_icon"
+            ></van-icon>
+            <div class="title">预约地址</div>
+            <div class="flex_title">
+              <div
+                :class="{ content: true, active: currentAddress != '' }"
+                @click="changeAddress"
+              >
+                {{ currentAddress != "" ? currentAddress : "请选择预约地址" }}
+              </div>
+              <van-icon name="arrow" color="#c0c0c0" size="16px"></van-icon>
             </div>
-            <van-icon name="arrow" color="#c0c0c0" size="16px"></van-icon>
           </div>
         </div>
       </div>
-    </div>
-    <!-- 分割线 -->
-    <van-divider></van-divider>
-<!-- 预估备注 -->
-    <div class="block" style="padding: 0 1rem 0 1rem">
-      <div class="nav">
-        <div class="nav_icon">
-          <div class="nav_icon2"></div>
-          <div class="nav_icon1"></div>
+      <!-- 分割线 -->
+      <van-divider></van-divider>
+      <!-- 预估备注 -->
+      <div class="block" style="padding: 0 1rem 0 1rem">
+        <div class="nav">
+          <div class="nav_icon">
+            <div class="nav_icon2"></div>
+            <div class="nav_icon1"></div>
+          </div>
+          <div class="nav_title">预估备注</div>
         </div>
-        <div class="nav_title">预估备注</div>
+        <div class="content">
+          <input id="comment" placeholder="请填写备注" v-model="comment" />
+        </div>
       </div>
-      <div class="content">
-        <input id="comment" placeholder="请填写备注" v-model="comment" />
-      </div>
-    </div>
-    <!-- 预约下单代表您已同意....跳转至 免责条款页 -->
-    <div class="footer">
-      <div class="clause">
-        预约下单代表您已同意<router-link to="/disclaimers" class="link"
-          >《免责条款》</router-link
+      <!-- 预约下单代表您已同意....跳转至 免责条款页 -->
+      <div class="footer">
+        <div class="clause">
+          预约下单代表您已同意<router-link to="/disclaimers" class="link"
+            >《免责条款》</router-link
+          >
+        </div>
+        <!-- 无法预约按钮 -->
+        <van-button
+          :type="allowSubmit ? 'primary' : 'default'"
+          round
+          size="large"
+          :disabled="!allowSubmit"
+          style="height: 50px"
         >
+          {{ allowSubmit ? "立即预约" : "无法预约" }}
+        </van-button>
       </div>
-      <!-- 无法预约按钮 -->
-      <van-button
-        :type="allowSubmit ? 'primary' : 'default'"
-        round
-        size="large"
-        :disabled="!allowSubmit"
-        style="height: 50px"
+      <!-- 底部导航栏 -->
+      <van-tabbar
+        class="bottom_nav"
+        :placeholder="true"
+        :safe-area-inset-bottom="true"
+        active-color="#25c89b"
+        inactive-color="#9D9D9D"
+        v-model="active"
       >
-        {{ allowSubmit ? "立即预约" : "无法预约" }}
-      </van-button>
+        <van-tabbar-item replace to="/" icon="wap-home">首页</van-tabbar-item>
+        <van-tabbar-item replace to="/the_order" icon="column"
+          >订单</van-tabbar-item
+        >
+        <van-tabbar-item replace to="/subscribe" icon="bell"
+          >一键预约</van-tabbar-item
+        >
+        <van-tabbar-item replace to="/homepage" icon="shop"
+          >商城</van-tabbar-item
+        >
+        <van-tabbar-item replace to="/me" icon="manager">我的</van-tabbar-item>
+      </van-tabbar>
     </div>
   </div>
 </template>
 
 <script>
 // 所需地图key
-import { WebServiceKey, JsApiKey } from "../utils/map.config";
+import { WebServiceKey, JsApiKey } from "../utils/map.config"
 // 预估重量
-import WeightRange from "../components/WeightRange";
+import WeightRange from "../components/WeightRange"
 // JS API结合Vue使用
-import AMapLoader from "@amap/amap-jsapi-loader";
+import AMapLoader from "@amap/amap-jsapi-loader"
 export default {
   components: {
     WeightRange,
   },
   data() {
     return {
-      active:2,
+      active: 2,
       map: null,
       areaEnable: false, //当前区域是否开通
       comment: "", //备注 双向绑定
@@ -289,10 +292,10 @@ export default {
       currentAddress: "", //当前填写的地址
       currentGeo: [], //当前填写的地址转换为经纬度,
       now: null, //时间选择器用的，用于初始化时间选择器的最小时间
-    };
+    }
   },
   mounted() {
-    this.now = new Date();
+    this.now = new Date()
     if (this.currentAddr) {
     } //不要删除这行，会出bug
   },
@@ -301,66 +304,67 @@ export default {
     initMap() {
       AMapLoader.load({
         key: JsApiKey,
-        version: "1.4.15",//指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-        plugins: [],//需要使用的的插件列表，如比例尺'AMap.Scale'等
+        version: "1.4.15", //指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+        plugins: [], //需要使用的的插件列表，如比例尺'AMap.Scale'等
       })
         .then((AMap) => {
-          this.map = new AMap.Map("map1", {//设置地图容器id
+          this.map = new AMap.Map("map1", {
+            //设置地图容器id
             viewMode: "2D",
-            zoom: 17,//初始化地图级别
-            center: this.currentGeo,//初始化地图中心点位置
-          });
-          
-	//创建marke
+            zoom: 17, //初始化地图级别
+            center: this.currentGeo, //初始化地图中心点位置
+          })
+
+          //创建marke
           let marker = new AMap.Marker({
             position: new AMap.LngLat(...this.currentGeo),
-          });
+          })
           // 将创建的点标记添加到已有的地图实例：
-          this.map.add(marker);
+          this.map.add(marker)
         })
         .catch((e) => {
-          console.log(e);
-        });
+          console.log(e)
+        })
     },
     destoryMap() {
       if (this.map != null) {
-        this.map.destroy();
+        this.map.destroy()
       }
     },
     recycleChange(id) {
       //设置选中的回收分类
-      this.currentRecycle = id;
+      this.currentRecycle = id
     },
     timePickerChange(e) {
       //切换时间选择器打开状态
-      this.timePickerShow = false;
+      this.timePickerShow = false
     },
     filter(type, options) {
       //时间选择器时间范围过滤
-      let now = new Date();
+      let now = new Date()
       if (type === "year") {
-        return options.filter((option) => option < now.getFullYear() + 1);
+        return options.filter((option) => option < now.getFullYear() + 1)
       } else if (type === "hour") {
         return options.filter(
           (option) =>
             Number.parseInt(option) >= 8 && Number.parseInt(option) <= 20
-        );
+        )
       } else if (type === "day") {
-        let day = now.getDate();
-        let hour = now.getHours();
+        let day = now.getDate()
+        let hour = now.getHours()
         return options.filter(
           (option) => (hour >= 20 && option != day) || hour < 20
-        );
+        )
       }
-      return options;
+      return options
     },
     selectWeight(id) {
       //选择重量范围
-      this.currentEstimateWeight = id;
+      this.currentEstimateWeight = id
     },
     changeAddress() {
       //点击修改地址按钮
-      this.$router.push("/recyclingadd");
+      this.$router.push("/recyclingadd")
     },
   },
   watch: {
@@ -375,27 +379,27 @@ export default {
               address: val,
             },
           }
-        );
-        this.currentGeo = res.data.geocodes[0].location.trim().split(",");
+        )
+        this.currentGeo = res.data.geocodes[0].location.trim().split(",")
       } catch (e) {} //防止数据出错
     },
     currentGeo(val) {
       //通过监听经纬度数组的长度，切换“当前是否在可用区域内”
       if (val.length === 2) {
-        this.areaEnable = true;
-        this.allowSubmit = true;
-        this.initMap();
+        this.areaEnable = true
+        this.allowSubmit = true
+        this.initMap()
       } else {
-        this.areaEnable = false;
-        this.allowSubmit = false;
-        this.destoryMap();
+        this.areaEnable = false
+        this.allowSubmit = false
+        this.destoryMap()
       }
     },
   },
   computed: {
     formattime() {
       //格式化日期，仅用于显示，实际提交表单应提交 this.servicetime
-      let time = new Date(this.servicetime);
+      let time = new Date(this.servicetime)
       return (
         time.getFullYear() +
         "年" +
@@ -405,23 +409,23 @@ export default {
         "日 " +
         time.getHours() +
         ":00"
-      );
+      )
     },
     currentAddr() {
       if (this.$store.state.address.currentSelectId === "-1") {
-        return "";
+        return ""
       } else {
         let temp =
           this.$store.state.address.address[
             Number.parseInt(this.$store.state.address.currentSelectId)
-          ];
-        let addr = temp.province + temp.city + temp.county + temp.addressDetail;
-        this.currentAddress = addr;
-        return addr;
+          ]
+        let addr = temp.province + temp.city + temp.county + temp.addressDetail
+        this.currentAddress = addr
+        return addr
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
