@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- <custom-navbar title="回收预约"></custom-navbar> -->
-    <div class="navbar"><div>回收预约</div></div>
+    <van-nav-bar title="回收预约"></van-nav-bar>
     <div class="block">
       <div class="nav">
           <!-- 文字左侧图标 -->
@@ -425,6 +425,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 头部背景样式
+::v-deep .van-nav-bar {
+  background-color: #25c89b;
+}
+//标题样式
+::v-deep .van-nav-bar__title {
+  color: #fff;
+}
 // 地图大小
 .map-box {
   width: 100%;
