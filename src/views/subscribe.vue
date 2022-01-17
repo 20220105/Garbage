@@ -93,6 +93,23 @@
           <div class="title">注意事项：小于10公斤暂不保证上门回收</div>
         </div>
       </div>
+    <!-- 底部导航栏 -->
+    <van-tabbar
+      class="bottom_nav"
+      :placeholder="true"
+      :safe-area-inset-bottom="true"
+      active-color="#25c89b"
+      inactive-color="#9D9D9D"
+      v-model="active"
+    >
+      <van-tabbar-item replace to="/" icon="wap-home">首页</van-tabbar-item>
+      <van-tabbar-item replace to="/the_order" icon="column"
+        >订单</van-tabbar-item
+      >
+      <van-tabbar-item replace to="/subscribe" icon="bell">一键预约</van-tabbar-item>
+      <van-tabbar-item replace to="/homepage" icon="shop">商城</van-tabbar-item>
+      <van-tabbar-item replace to="/me" icon="manager">我的</van-tabbar-item>
+    </van-tabbar>
     </div>
    
     <van-divider></van-divider>
@@ -213,6 +230,7 @@ export default {
   },
   data() {
     return {
+      active:2,
       map: null,
       areaEnable: false, //当前区域是否开通
       comment: "", //备注 双向绑定
@@ -617,5 +635,11 @@ div.title {
 .van-divider--hairline::after,
 .van-divider--hairline::before {
   transform: scaleY(3.5);
+}
+// 底部导航栏
+::v-deep .bottom_nav {
+  .van-icon {
+    font-size: 1.65rem;
+  }
 }
 </style>
