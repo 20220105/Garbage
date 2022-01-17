@@ -7,6 +7,7 @@
       left-arrow
       @click-left="onClickLeft"
     />
+    <!--  地址编辑 -->
     <van-address-edit
       :area-list="areaList"
       show-postal
@@ -26,16 +27,17 @@
 </template>
 
 <script>
-  import { areaList } from '@vant/area-data'
+  import { areaList } from '@vant/area-data'//Vant 官方提供了一份默认的省市区数据
   import { WebServiceKey, JsApiKey } from '../utils/map.config';
   export default {
   data() {
     return {
-      areaList,
-      currentArea: [],
-      searchResult: [{}],
+      areaList,//省市区
+      currentArea: [],//当前地区
+      searchResult: [{}],//搜索结果
     };
   },
+  // AddressEdit 地址编辑
   computed:{
     initAddressInfo(){
       if(this.$route.params.id !== undefined){
