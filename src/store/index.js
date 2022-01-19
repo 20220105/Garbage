@@ -6,12 +6,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     islogin:false,
-    name:''
+    nickname:''
   },
   mutations: {
     loginOK(state,newname){
       state.islogin=true
-      state.name=newname
+      state.nickname=newname
     }
   },
   actions: {

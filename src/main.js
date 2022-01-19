@@ -1,8 +1,9 @@
 import Vue from "vue"
+import Vuex from 'vuex'
 import App from "./App.vue"
 import router from "./router"
 import store from "./store"
-
+Vue.use(Vuex)
 Vue.config.productionTip = false
 
 // 引入vant全部组件
