@@ -1,4 +1,5 @@
 <template>
+<!-- 预估重量     重量范围选中后会变绿 -->
   <div :class="{ tag_container: true, tag_active: checked }">
     <slot></slot>
   </div>

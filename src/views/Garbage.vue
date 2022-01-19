@@ -10,8 +10,13 @@
           color="#25c89b"
         />
         <van-search
+          v-model="garbageName"
           shape="round"
           show-action
+          maxlength="30"
+          autofocus="true"
+          clearable
+          clear-trigger="focus"
           placeholder="请输入搜索关键词"
           @search="onSearch"
         >
@@ -20,7 +25,7 @@
           </template>
         </van-search>
 
-        <div class="card-1">
+        <div class="card-1" v-if="!garbageClass">
           <img src="../assets/img/ljfl_search/001.png" alt="" width="100%" />
           <div>
             <van-notice-bar
@@ -41,10 +46,33 @@
             </div>
           </div>
         </div>
+        <div v-else>
+          <!-- 搜索到内容渲染 -->
+          <div>
+            <div class="card-2" :style="{ color: color }">
+              <van-row>
+                <van-col span="8">
+                  <img :src="garbageClass.garbage_class_img_url" alt="" />
+                </van-col>
+                <van-col span="16">
+                  <span>{{ garbageClass.garbage_class_name }} :</span>
+                  <span>{{ garbageClass.garbage_class_describe }}</span>
+                </van-col>
+              </van-row>
+            </div>
+            <div class="card-3" :style="{ color: color }">
+              <van-row>
+                <van-col span="24" :style="{ backgroundColor: color }">
+                  <span>{{ garbageClass.garbage_class_name }}处理方式</span>
+                </van-col>
+                <van-col span="24">
+                  <span>{{ garbageClass.garbage_class_handling }}</span>
+                </van-col>
+              </van-row>
+            </div>
+          </div>
+        </div>
       </div>
-      <div></div>
-      <!-- 用来写其它的v-if -->
-      <div></div>
     </div>
   </div>
 </template>
@@ -53,7 +81,10 @@
 export default {
   data() {
     return {
-      h: "",
+      h: "", //动态高
+      color: "", //动态颜色
+      garbageName: "", //搜索框查询的值
+      garbageClass: "", //获取到的内容
     }
   },
   methods: {
@@ -70,7 +101,26 @@ export default {
       this.h = h
       console.log(this.h)
     },
-    onSearch() {},
+    onSearch() {
+      let url = `/search_garbageClass/${this.garbageName}`
+      this.axios.get(url).then((res) => {
+        this.garbageClass = res.data.result
+        console.log(this.garbageClass)
+        if (this.garbageClass) {
+          let color_id = this.garbageClass.garbage_class_id
+          if (color_id == 1) this.color = "#036EB8"
+          else if (color_id == 2) this.color = "#094"
+          else if (color_id == 3) this.color = "#9FA0A0"
+          else if (color_id == 4) this.color = "#E60012"
+          else this.color = "blue"
+        } else {
+          this.$toast.fail({
+            message: "抱歉,暂未找到匹配的结果",
+            icon: "warning",
+          })
+        }
+      })
+    },
   },
   mounted() {
     this.windowHeight()
@@ -156,5 +206,53 @@ p {
   width: 100% !important;
   height: 1.4rem !important;
   font-weight: 500;
+}
+.card-2 {
+  width: 100%;
+  height: 8.65rem;
+  background-color: #fff;
+  padding: 1.5rem 0 1.5rem 0;
+  border-radius: 1.5rem;
+  margin-top: 1rem;
+  img {
+    display: inline-block;
+    overflow: hidden;
+  }
+  span {
+    display: inline-block;
+  }
+  :nth-child(2) {
+    :nth-child(1) {
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-top: 0.5rem;
+    }
+    :nth-child(2) {
+      margin-top: 1.1rem;
+    }
+  }
+}
+.card-3 {
+  width: 100%;
+  height: 9.65rem;
+  border-radius: 1.5rem;
+  background-color: #fff;
+  margin-top: 1rem;
+  :nth-child(1) {
+    border-radius: 1.5rem 1.5rem 0 0;
+    :nth-child(1) {
+      span {
+        color: #fff;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        padding: 1rem 0;
+      }
+    }
+    :nth-child(2) {
+      padding: 1rem;
+    }
+  }
 }
 </style>

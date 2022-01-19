@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import Address from './address'
+
 export default new Vuex.Store({
   state: {
     islogin:false,
@@ -17,5 +19,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    address: Address
   }
 })

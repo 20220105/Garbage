@@ -5,6 +5,36 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: "/results",
+    name: "Results",
+    component: () => import('../views/Results.vue')
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: () => import('../views/Search.vue')
+  },
+  {
+    path: "/me",
+    name: "Me",
+    component: () => import('../views/Me.vue')
+  },
+  {
+    path:'/addressedit',
+    name:"addressedit",
+    component: () => import("../views/AddressEdit.vue"),
+  },
+  {
+    path:'/disclaimers',
+    name:"disclaimers",
+    component: () => import("../views/Disclaimers.vue"),
+  },
+  {
+    path: "/recyclingadd",
+    name: "recyclingadd",
+    component: () => import("../views/Recyclingadd.vue"),
+  },
+  {
     path: "/garbage",
     name: "Garbage",
     component: () => import("@/views/Garbage.vue"),
