@@ -46,6 +46,7 @@
         return undefined
     }
   },
+
   methods: {
     async searchPoi(val,area){
       let res = await this.axios.get('https://restapi.amap.com/v3/place/text?parameters',{
@@ -56,12 +57,15 @@
           offset: 10
         }
       })
+      // 高德api返回的数据,1代表api调用成功没有错误(0有错误)
       if(res.data.status === "1" && res.data.pois.length > 0){
         return res.data.pois.filter(val=>typeof val.address === 'string' && val.address !== '').map(val=>{
           return {
             name: val.name,
+            // 三目运算符判断是否为直辖市
             address: val.pname === val.cityname ? val.cityname + val.adname + val.address : val.pname + val.cityname + val.adname + val.address,
             pname: val.pname,
+            // code分别对应省/市/区编码
             pcode: val.pcode,
             cityname: val.cityname,
             citycode: val.citycode,
@@ -79,6 +83,7 @@
     onClickLeft(){
       this.$router.back()
     },
+    // 整理数据,存入vuex,指定不同的数据源
     onSave(content) {
       let temp = {
         id: this.$route.params.id,
@@ -91,6 +96,7 @@
         postalCode: content.postalCode,
         province: this.currentArea[0]?.name || content.province,
         tel: content.tel
+
       }
       this.$store.commit('address/pushAddress',temp)
       alert('保存成功')
@@ -106,6 +112,7 @@
         this.$router.push('/recyclingadd')
       }
     },
+    // 详细地址框输入的实时搜索地址功能
     async onChangeDetail(val) {
       if (val) {
         if(this.currentArea.length > 0){
@@ -116,6 +123,7 @@
         this.searchResult = [];
       }
     },
+    // 避免搜出来的地区和上面选的地区不一致,保存搜到的地址数据
     onSelectArea(val){
       this.currentArea = [{
         name: val.pname,
