@@ -107,7 +107,12 @@
             <span>回收指南</span>
           </van-grid-item>
           <van-grid-item>
-            <van-icon name="share-o" size="2.3rem" color="#75e7a2" />
+            <van-icon
+              name="share-o"
+              size="2.3rem"
+              color="#75e7a2"
+              @click="showShare = true"
+            />
             <span>邀请有礼</span>
           </van-grid-item>
           <van-grid-item>
@@ -133,7 +138,25 @@
         </van-grid>
       </div>
     </div>
+    <!-- 分享 -->
+    <van-share-sheet
+      v-model="showShare"
+      title="立即分享给好友"
+      :options="options"
+      @select="onSelect"
+      data-clipboard-action="copy"
+      data-clipboard-target="#link"
+    />
 
+    <span
+      class="text_link"
+      type="text"
+      id="link"
+      :value="url"
+      ref="link"
+      style="display: none"
+      >{{ url }}</span
+    >
     <!-- 底部导航栏 -->
     <van-tabbar
       class="bottom_nav"
@@ -157,6 +180,7 @@
 </template>
 
 <script>
+import Clipboard from "clipboard"
 export default {
   data() {
     return {
@@ -170,7 +194,29 @@ export default {
         recycle_count: 0,
       },
       userId: "",
+      // 分享
+      showShare: false,
+      // 分享
+      options: [
+        { name: "微信", icon: "wechat" },
+        { name: "微博", icon: "weibo" },
+        {
+          name: "复制链接",
+          icon: "link",
+          className: "copy",
+        },
+        { name: "分享海报", icon: "poster" },
+        { name: "二维码", icon: "qrcode" },
+      ],
+      isShow: false,
+      word: "复制成功!去分享",
+      url: "",
     }
+  },
+  // 实例创建后,进行默认数据处理
+  created() {
+    this.url = `http://${location.hostname}:${location.port}/`
+    console.log(this.url)
   },
   methods: {
     // isLogin() {
@@ -185,6 +231,16 @@ export default {
         this.money = res.data.results[0]
         console.log(this.money)
       })
+    },
+    // 分享  复制链接
+    onSelect(option) {
+      this.$toast(option.name)
+      this.showShare = false
+      if (option.name == "复制链接") {
+        let container = this.$refs.container
+        this.$copyText(this.url, container)
+        this.$toast(this.word)
+      }
     },
   },
   mounted() {
