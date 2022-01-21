@@ -1,8 +1,9 @@
 import Vue from "vue"
+import Vuex from "vuex"
 import App from "./App.vue"
 import router from "./router"
 import store from "./store"
-
+Vue.use(Vuex)
 Vue.config.productionTip = false
 
 // 引入vant全部组件
@@ -14,10 +15,12 @@ Vue.use(Vant)
 import axios from "axios"
 axios.defaults.baseURL = "http://localhost:3000/"
 
+// 引入复制组件
+import VueClipboard from "vue-clipboard2"
+Vue.use(VueClipboard)
 
 Vue.prototype.axios = axios
 Vue.prototype.$axios = axios
-
 
 new Vue({
   router,

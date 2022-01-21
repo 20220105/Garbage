@@ -155,6 +155,7 @@
                 :class="{ content: true, active: currentAddress != '' }"
                 @click="changeAddress"
               >
+              <!-- 三目运算符 -->
                 {{ currentAddress != "" ? currentAddress : "请选择预约地址" }}
               </div>
               <van-icon name="arrow" color="#c0c0c0" size="16px"></van-icon>
@@ -367,6 +368,7 @@ export default {
       this.$router.push("/recyclingadd")
     },
   },
+
   watch: {
     async currentAddress(val) {
       //异步方法，地名转经纬度
@@ -471,7 +473,7 @@ export default {
   position: relative;
 }
 .block {
-  width: 100%;
+  width: 98%;
   height: auto;
   background-color: #ffffff;
   padding: 1.5rem 1rem 0 1.5rem;

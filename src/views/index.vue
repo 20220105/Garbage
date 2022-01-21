@@ -65,15 +65,15 @@
           />
           <van-grid :border="false" :column-num="3">
             <van-grid-item>
-              <h1 style="color: #25c89b">0.00</h1>
+              <h1 style="color: #25c89b">{{ money.money_amoun }}</h1>
               <span>环保金额</span>
             </van-grid-item>
             <van-grid-item>
-              <h1>0</h1>
+              <h1>{{ money.recycle_count }}</h1>
               <span>回收次数</span>
             </van-grid-item>
             <van-grid-item>
-              <h1>0</h1>
+              <h1>{{ money.integral }}</h1>
               <span>积分</span>
             </van-grid-item>
           </van-grid>
@@ -126,10 +126,21 @@
       <van-tabbar-item replace to="/the_order" icon="column"
         >订单</van-tabbar-item
       >
-      <van-tabbar-item replace to="/subscribe" icon="bell">一键预约</van-tabbar-item>
+      <van-tabbar-item replace to="/subscribe" icon="bell"
+        >一键预约</van-tabbar-item
+      >
       <van-tabbar-item replace to="/homepage" icon="shop">商城</van-tabbar-item>
       <van-tabbar-item replace to="/me" icon="manager">我的</van-tabbar-item>
     </van-tabbar>
+    <!-- 垃圾识别之后的弹出层 -->
+    <!-- 弹出层 -->
+    <van-popup v-model="show" closeable>
+      <div class="ljfl-tcc">
+        <img :src="url" alt="" />
+        <span>垃圾:{{ garbage_lj.Rubbish }}</span>
+        <span>垃圾类别:{{ garbage_lj.Category }}</span>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -145,6 +156,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       active: 0,
       address: "", //地理位置名称
       // 轮播图图片
@@ -156,6 +168,13 @@ export default {
         "/rubbish_img/5.jpg",
       ],
       isRouterAlive: true, //用来局部刷新
+      url: "", //拍照后传递的url参数
+      garbage_lj: "", //拍照后传回来得垃圾数据
+      money: {
+        money_amoun: 0,
+        integral: 0,
+        recycle_count: 0,
+      },
     }
   },
   methods: {
@@ -173,6 +192,10 @@ export default {
       })
     },
     afterRead(file) {
+      this.$toast.loading({
+        message: "识别中...",
+        forbidClick: true,
+      })
       // 此时可以自行将文件上传至服务器
       file.status = "uploading"
       file.message = "上传中..."
@@ -190,24 +213,49 @@ export default {
       client()
         .multipartUpload(fileName, file.file)
         .then((res) => {
-          console.log("res", res.res.requestUrls[0])
+          this.url = res.res.requestUrls[0].split("?")[0]
+          // console.log("res", res.res.requestUrls[0])
+          console.log("url", this.url)
           let imageUrlObj = {}
           imageUrlObj.fileName = res.res.requestUrls[0]
           imageUrlObj.fileUrl = res.res.requestUrls[0]
           imageUrlObj.fileType = 1
           imageUrlObj.type = 1
           this.imageUrlIdCard = imageUrlObj
-          this.submitFile() //调后端接口，将oss返回的数据传给后端存储倒库
+          // this.submitFile() //调后端接口，将oss返回的数据传给后端存储倒库
           file.status = ""
           file.message = ""
+          let params = `imgUrl=${this.url}`
+          console.log(params)
+          this.axios.post("/gcs", params).then((res) => {
+            // console.log(res)
+            if (res.data.code != 200) {
+              this.$toast.fail("抱歉!识别失败!我们正在努力学习中!")
+            } else {
+              this.garbage_lj = res.data.results.Data.Elements[0]
+              // console.log(this.garbage_lj)
+              this.show = true
+            }
+          })
         })
         .catch((err) => {
           console.warn(err)
         })
       console.log(file)
     },
+    getuser() {
+      let id = sessionStorage.getItem("id")
+      this.userId = id
+      let url = `/money_amoun/${id}`
+      this.axios.get(url).then((res) => {
+        this.money = res.data.results[0]
+        console.log(this.money)
+      })
+    },
   },
-  mounted() {},
+  mounted() {
+    this.getuser()
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -307,5 +355,31 @@ export default {
   .van-icon {
     font-size: 1.65rem;
   }
+}
+
+// 弹出层样式
+.van-popup--center {
+  border-radius: 1.5rem;
+}
+.ljfl-tcc {
+  width: 70vw;
+  text-align: center;
+  img {
+    display: block;
+    margin: auto;
+    margin-top: 0.9rem;
+    width: 90%;
+    border-radius: 1.5rem;
+  }
+  span {
+    display: block;
+    margin: 0.7rem 0;
+  }
+}
+.van-button--large {
+  width: 90%;
+  display: block;
+  margin: auto;
+  margin-bottom: 0.5rem;
 }
 </style>

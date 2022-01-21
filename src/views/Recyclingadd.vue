@@ -24,6 +24,7 @@
         chosenAddressId: ''
       };
     },
+    // 给vuex的addressDetail字段改个名字,因为组件初始化,传入的默认地址为address
     computed:{
       list(){
         return this.$store.state.address.address.map(val=>{
