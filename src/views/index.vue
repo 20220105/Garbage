@@ -65,15 +65,15 @@
           />
           <van-grid :border="false" :column-num="3">
             <van-grid-item>
-              <h1 style="color: #25c89b">0.00</h1>
+              <h1 style="color: #25c89b">{{ money.money_amoun }}</h1>
               <span>环保金额</span>
             </van-grid-item>
             <van-grid-item>
-              <h1>0</h1>
+              <h1>{{ money.recycle_count }}</h1>
               <span>回收次数</span>
             </van-grid-item>
             <van-grid-item>
-              <h1>0</h1>
+              <h1>{{ money.integral }}</h1>
               <span>积分</span>
             </van-grid-item>
           </van-grid>
@@ -170,6 +170,11 @@ export default {
       isRouterAlive: true, //用来局部刷新
       url: "", //拍照后传递的url参数
       garbage_lj: "", //拍照后传回来得垃圾数据
+      money: {
+        money_amoun: 0,
+        integral: 0,
+        recycle_count: 0,
+      },
     }
   },
   methods: {
@@ -238,8 +243,19 @@ export default {
         })
       console.log(file)
     },
+    getuser() {
+      let id = sessionStorage.getItem("id")
+      this.userId = id
+      let url = `/money_amoun/${id}`
+      this.axios.get(url).then((res) => {
+        this.money = res.data.results[0]
+        console.log(this.money)
+      })
+    },
   },
-  mounted() {},
+  mounted() {
+    this.getuser()
+  },
 }
 </script>
 <style lang="scss" scoped>

@@ -38,22 +38,22 @@
       <div v-if="$store.state.islogin" class="hic">
         <span class="islogin">{{ $store.state.nickname }}</span>
         <div>
-          <span class="client_id">ID:{{ $store.state.id }}</span>
+          <span class="client_id">ID:{{ userId }}</span>
         </div>
       </div>
       <!-- 环保金 -->
       <div class="eco-gold">
         <van-grid :border="false" :column-num="3">
           <van-grid-item>
-            <h1>0.00</h1>
+            <h1>{{ money.money_amoun }}</h1>
             <span>环保金额</span>
           </van-grid-item>
           <van-grid-item>
-            <h1>0</h1>
+            <h1>{{ money.recycle_count }}</h1>
             <span>回收次数</span>
           </van-grid-item>
           <van-grid-item>
-            <h1>0</h1>
+            <h1>{{ money.integral }}</h1>
             <span>积分</span>
           </van-grid-item>
         </van-grid>
@@ -163,12 +163,33 @@ export default {
       active: 4,
       selected: "main",
       loading: false,
+      isLogin: false,
+      money: {
+        money_amoun: 0,
+        integral: 0,
+        recycle_count: 0,
+      },
+      userId: "",
     }
   },
   methods: {
-    isLogin() {
-      this.$store.commit("loginOK")
+    // isLogin() {
+    //   // this.$store.commit("loginOK")
+    //   let a = sessionStorage.getItem("id")
+    // },
+    getuser() {
+      let id = sessionStorage.getItem("id")
+      this.userId = id
+      let url = `/money_amoun/${id}`
+      this.axios.get(url).then((res) => {
+        this.money = res.data.results[0]
+        console.log(this.money)
+      })
     },
+  },
+  mounted() {
+    // this.isLogin()
+    this.getuser()
   },
 }
 </script>
