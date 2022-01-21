@@ -7,26 +7,26 @@ const routes = [
   {
     path: "/results",
     name: "Results",
-    component: () => import('../views/Results.vue')
+    component: () => import("../views/Results.vue"),
   },
   {
     path: "/search",
     name: "Search",
-    component: () => import('../views/Search.vue')
+    component: () => import("../views/Search.vue"),
   },
   {
     path: "/me",
     name: "Me",
-    component: () => import('../views/Me.vue')
+    component: () => import("../views/Me.vue"),
   },
   {
-    path:'/addressedit',
-    name:"addressedit",
+    path: "/addressedit",
+    name: "addressedit",
     component: () => import("../views/AddressEdit.vue"),
   },
   {
-    path:'/disclaimers',
-    name:"disclaimers",
+    path: "/disclaimers",
+    name: "disclaimers",
     component: () => import("../views/Disclaimers.vue"),
   },
   {
@@ -43,11 +43,6 @@ const routes = [
     path: "/subscribe",
     name: "Subscribe",
     component: () => import("../views/subscribe.vue"),
-  },
-  {
-    path: "/me",
-    name: "Me",
-    component: () => import("../views/Me.vue"),
   },
   {
     path: "/login",
@@ -68,11 +63,6 @@ const routes = [
     path: "/the_order",
     name: "The_order",
     component: () => import("../views/The_order.vue"),
-  },
-  {
-    path: "/nav",
-    name: "Nav",
-    component: () => import("../text/nav.vue"),
   },
   {
     path: "/ssk",

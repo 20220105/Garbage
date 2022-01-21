@@ -49,12 +49,14 @@ export default {
       if(this.checkName()&&this.checkPwd()){
         console.log('验证成功,执行登录业务')
         //发送post请求,执行登录业务
-        this.axios.post('/login',`client_name=${this.name}&client_pwd=${this.pwd}&nickname=${this.nickname}`).then(res=>{
+        this.axios.post('/login',`client_name=${this.name}&client_pwd=${this.pwd}`).then(res=>{
           console.log(res)
           if(res.data.code==200){
             this.$toast('登录成功')
             //调用mutations中的lognOk,修改vuex用户状态
             this.$store.commit('loginOK',res.data.result.nickname)
+            this.$store.commit('loginOKId',res.data.result.client_id)
+            this.$store.commit('loginOKUrl',res.data.result.client_head_url)
             this.$router.push('/me')
           }else{  //登录失败
             this.$toast('账号密码输入错误')

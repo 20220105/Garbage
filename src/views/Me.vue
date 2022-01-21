@@ -1,14 +1,138 @@
 <template>
-  <div>
+  <div style="background-color: #f3f2f2">
     <!-- 标题栏 -->
-    <van-nav-bar @load="isLogin" title="我的" @click-left="$router.go(-1)">
-      <template v-if="$store.state.islogin" #right>
-        欢迎:{{ $store.state.nickname }}
-      </template>
-      <template v-else #right>
-        <router-link to="/login">登录</router-link>
-      </template>
-    </van-nav-bar>
+    <van-nav-bar @load="isLogin" title="我的"></van-nav-bar>
+
+    <div class="head_money">
+      <div class="ss">
+        <router-link
+          to="/login"
+          class="click_login"
+          v-if="!$store.state.islogin"
+        >
+          <van-image
+            round
+            width="5rem"
+            height="5rem"
+            src="https://img01.yzcdn.cn/vant/cat.jpeg"
+            fit="cover"
+          />
+        </router-link>
+        <router-link
+          to="/login"
+          class="click_login"
+          v-if="$store.state.islogin"
+        >
+          <van-image
+            round
+            width="5rem"
+            height="5rem"
+            :src="$store.state.url"
+            fit="cover"
+          />
+        </router-link>
+      </div>
+      <router-link to="/login" class="click_login" v-if="!$store.state.islogin"
+        >点击登录</router-link
+      >
+      <div v-if="$store.state.islogin" class="hic">
+        <span class="islogin">{{ $store.state.nickname }}</span>
+        <div>
+          <span class="client_id">ID:{{ $store.state.id }}</span>
+        </div>
+      </div>
+      <!-- 环保金 -->
+      <div class="eco-gold">
+        <van-grid :border="false" :column-num="3">
+          <van-grid-item>
+            <h1>0.00</h1>
+            <span>环保金额</span>
+          </van-grid-item>
+          <van-grid-item>
+            <h1>0</h1>
+            <span>回收次数</span>
+          </van-grid-item>
+          <van-grid-item>
+            <h1>0</h1>
+            <span>积分</span>
+          </van-grid-item>
+        </van-grid>
+      </div>
+    </div>
+    <div class="body">
+      <van-grid direction="horizontal" :column-num="2" class="tixianMingxi">
+        <van-grid-item icon="balance-list-o" text="收入明细" class="shouru" />
+        <van-grid-item icon="after-sale" text="去提现" class="tixian" />
+      </van-grid>
+      <div class="recycling-process">
+        <van-notice-bar
+          left-icon="column"
+          text="回收订单"
+          background="#fff"
+          color="#25c89b"
+        />
+        <van-grid :border="false" :column-num="4">
+          <van-grid-item class="left">
+            <van-icon name="todo-list" size="2.3rem" color="#75e7a2" />
+            <span>全部预约</span>
+          </van-grid-item>
+          <van-grid-item>
+            <van-icon name="smile-comment" size="2.3rem" color="#75e7a2" />
+            <span>待服务</span>
+          </van-grid-item>
+          <van-grid-item>
+            <van-icon name="clock" size="2.3rem" color="#75e7a2" />
+            <span>已称重</span>
+          </van-grid-item>
+          <van-grid-item class="right">
+            <van-icon name="clear" size="2.3rem" color="#75e7a2" />
+            <span>已取消</span>
+          </van-grid-item>
+        </van-grid>
+      </div>
+      <div class="recycling-process">
+        <van-notice-bar
+          left-icon="setting"
+          text="常用工具"
+          background="#fff"
+          color="#25c89b"
+        />
+        <van-grid :border="false" :column-num="4">
+          <van-grid-item to="/rankingList">
+            <van-icon name="medal-o" size="2.3rem" color="#75e7a2" />
+            <span>回收榜单</span>
+          </van-grid-item>
+          <van-grid-item to="/recyclingGuide">
+            <van-icon name="newspaper-o" size="2.3rem" color="#75e7a2" />
+            <span>回收指南</span>
+          </van-grid-item>
+          <van-grid-item>
+            <van-icon name="share-o" size="2.3rem" color="#75e7a2" />
+            <span>邀请有礼</span>
+          </van-grid-item>
+          <van-grid-item>
+            <van-icon name="orders-o" size="2.3rem" color="#75e7a2" />
+            <span>邀请列表</span>
+          </van-grid-item>
+          <van-grid-item class="left">
+            <van-icon name="envelop-o" size="2.3rem" color="#75e7a2" />
+            <span>意见反馈</span>
+          </van-grid-item>
+          <van-grid-item>
+            <van-icon name="service-o" size="2.3rem" color="#75e7a2" />
+            <span>客服</span>
+          </van-grid-item>
+          <van-grid-item>
+            <van-icon name="location-o" size="2.3rem" color="#75e7a2" />
+            <span>回收地址</span>
+          </van-grid-item>
+          <van-grid-item class="right">
+            <van-icon name="" size="2.3rem" color="#75e7a2" />
+            <span></span>
+          </van-grid-item>
+        </van-grid>
+      </div>
+    </div>
 
     <!-- 底部导航栏 -->
     <van-tabbar
@@ -58,7 +182,110 @@ export default {
 ::v-deep .van-nav-bar__title {
   color: #fff;
 }
-// 此处添加其它样式
+// 头加金额
+.head_money {
+  background-color: #25c89b;
+  padding-top: 1rem;
+}
+// 头像部分样式
+.ss {
+  width: 100%;
+  text-align: center;
+}
+.van-tabbar-item {
+  color: #fff;
+}
+.click_login,
+.islogin {
+  width: 100%;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+}
+.van-cell__title > span,
+.islogin,
+span {
+  color: #fff;
+}
+::v-deep .hic > :nth-child(2) {
+  background-color: #21b48b;
+  font-size: 0.3rem;
+  display: block !important;
+  width: 5rem;
+  margin: auto;
+  text-align: center;
+  padding: 0.2rem 0;
+  border-radius: 1rem;
+}
+//
+.body {
+  margin: 0 0 0.5rem 0;
+  position: relative;
+  bottom: 2rem;
+}
+// 环保金额
+.eco-gold {
+  h1 {
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 300;
+  }
+  ::v-deep .van-grid-item__content--center {
+    background-color: #25c89b;
+    padding-bottom: 4rem;
+  }
+}
+// 提现明细
+// .aaa {
+//   width: 100vw;
+// }
+.recycling-process,
+.tixianMingxi {
+  // background-color: red;
+  width: 95%;
+  margin: auto;
+  // position: absolute;
+  // overflow: hidden;
+  // top: 18.5rem;
+  // left: 0.3rem;
+}
+.recycling-process {
+  margin-top: 0.5rem;
+  span {
+    color: black;
+  }
+  .van-notice-bar {
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  .left {
+    ::v-deep .van-grid-item__content--center {
+      border-radius: 0 0 0 0.5rem;
+    }
+  }
+  .right {
+    ::v-deep .van-grid-item__content--center {
+      border-radius: 0 0 0.5rem 0;
+    }
+  }
+}
+.shouru > ::v-deep div {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+.tixian > ::v-deep div {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.van-grid {
+  // width: 95%;
+  // margin: auto;
+  ::v-deep
+    .van-grid-item__content--horizontal
+    .van-grid-item__icon
+    + .van-grid-item__text {
+    font-size: 1rem;
+    color: black;
+  }
+}
+
 // 底部导航栏
 ::v-deep .bottom_nav {
   .van-icon {
