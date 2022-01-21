@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #eee; height: 100vh;">
+  <div style="background-color: #25c89b; ">
     <!-- 头部搜索栏 -->
     <div class="searchtop">
       <img src="../../public/img/BR.png" @click="goback">
@@ -30,39 +30,39 @@
       <div class="klist">
         <p>
           <img src="../../public/img/tM.png">
-          <span>前任送的,这都能回收</span>
+          <span>单排被三个大佛丢绢子</span>
         </p>
         <p>
           <img src="../../public/img/tO.png">
-          <span>前任送的,这都能回收</span>
+          <span>他说火男V2是垃圾</span>
         </p>
         <p>
           <img src="../../public/img/tA1.png">
-          <span>前任送的,这都能回收</span>
+          <span>自从捡了雷刀就只会左蓄力</span>
         </p>
         <p>
           <span>4</span>
-          <span>前任送的,这都能回收</span>
+          <span>凤凰羽真难振</span>
         </p>
         <p>
           <span>5</span>
-          <span>前任送的,这都能回收</span>
+          <span>大B阔伤害是真的高</span>
         </p>
         <p>
           <span>6</span>
-          <span>前任送的,这都能回收</span>
+          <span>室友三发出狼主,命不久矣</span>
         </p>
         <p>
           <span>7</span>
-          <span>前任送的,这都能回收</span>
+          <span>保底墨离,欲哭无泪</span>
         </p>
         <p>
           <span>8</span>
-          <span>前任送的,这都能回收</span>
+          <span>新赛季一天上王者</span>
         </p>
         <p>
           <span>9</span>
-          <span>前任送的,这都能回收</span>
+          <span>她说我是个普信男</span>
         </p>
         <p>
           <span>10</span>
@@ -120,4 +120,10 @@
   }
 </script>
 
-<style scoped src="../assets/css/search.css"></style>
+<style scoped src="../assets/css/search.css">
+element.style {
+  background-color: #25c89b;
+    
+    height: 100vh;
+}
+</style>

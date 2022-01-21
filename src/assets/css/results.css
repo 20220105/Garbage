@@ -83,7 +83,7 @@
   height: 3rem;
 }
 .searchtop>div {
-  width: 70vw;
+  width: 60vw;
   height: 2.6rem;
   border: 0.2rem solid #000;
   border-left: 0.5rem solid #000;
@@ -99,7 +99,7 @@
   font-size: 1.4rem;
 }
 .searchtop>p {
-  line-height: 3rem;
-  font-size: 1.4rem;
+  line-height: 0rem;
+  font-size: 1.5rem;
   color: #555;
 }

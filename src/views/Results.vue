@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div style="background-color: #25c89b;">
     <div class="main">
       <!-- 头部搜索栏 -->
       <div class="searchtop">
         <img src="/img/BR.png" @click="goback" />
         <div>
           <input type="text" />
+
         </div>
         <p @click="tosearch">搜索</p>
       </div>

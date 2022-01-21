@@ -1,24 +1,36 @@
+element.style {
+  background-color: rgb(235, 27, 27);
+  height: 100vh;
+}
+
+/* 顶部样式 */
 .searchtop {
   width: 100vw;
-  height: 5rem;
+  height: 5.5rem;
   display: flex;
   justify-content: space-between;
   padding: 1rem;
   box-sizing: border-box;
 }
+
+/* 返回图标样式 */
 .searchtop img {
   display: block;
   width: 3rem;
   height: 3rem;
 }
+
+/* 输入框样式 */
 .searchtop>div {
-  width: 70vw;
+  width: 60vw;
   height: 2.6rem;
   border: 0.2rem solid #000;
   border-left: 0.5rem solid #000;
   border-right: 0.5rem solid #000;
   border-radius: 0.3rem;
 }
+
+/* 输入框内部样式 */
 .searchtop>div input {
   width: 100%;
   height: 100%;
@@ -27,11 +39,14 @@
   box-sizing: border-box;
   font-size: 1.4rem;
 }
+
+/* 搜素的样式 */
 .searchtop>p {
-  line-height: 3rem;
-  font-size: 1.4rem;
+  line-height: 0rem;
+  font-size: 1.5rem;
   color: #555;
 }
+
 .history {
   margin: 0 1rem 1rem;
   padding: 1rem 1rem;
@@ -40,28 +55,33 @@
   position: relative;
   display: none;
 }
-.history h2{
+
+.history h2 {
   margin-bottom: 1rem;
 }
+
 .history .hlist {
   height: 4.5rem;
   overflow: hidden;
 }
+
 .history .hlist span {
   display: inline-block;
   margin-right: 1rem;
   margin-bottom: 1rem;
   font-size: 1.3rem;
-  color: #666;
+  color: #555;
   padding-right: 1rem;
   border-right: 0.1rem solid #eee;
 }
+
 .history>img {
   width: 1.8rem;
   position: absolute;
   top: 1rem;
   right: 1rem;
 }
+
 .recommend {
   padding: 1rem 1rem;
   background-color: #fff;
@@ -69,13 +89,16 @@
   position: relative;
   margin: 0 1rem;
 }
+
 .recommend>h2 {
   margin-bottom: 1rem;
 }
-.recommend > .rlist {
-  height: 4.5rem;
+
+.recommend>.rlist {
+  height: 3.5rem;
   overflow: hidden;
 }
+
 .recommend .rlist span {
   display: inline-block;
   margin-right: 1rem;
@@ -85,6 +108,7 @@
   padding-right: 1rem;
   border-right: 0.1rem solid #eee;
 }
+
 .recommend>img {
   width: 1.8rem;
   position: absolute;
@@ -92,23 +116,29 @@
   right: 1rem;
   transform: rotate(90deg);
 }
+
 .rank {
   padding: 1rem 1rem;
   background-color: #fff;
   border-radius: 0.5rem;
   margin: 1rem 1rem 0;
 }
+
 .rank>h2 {
   margin-bottom: 1rem;
 }
+
 .rank .klist p {
   margin: 1rem 0;
 }
+
 .rank .klist p img {
   width: 1.5rem;
   vertical-align: middle;
   margin-right: 1rem;
 }
+
+/* 热搜排名字体样式 */
 .rank .klist p span:nth-child(1) {
   display: inline-block;
   font-size: 1.4rem;
@@ -116,6 +146,7 @@
   color: #888;
   margin: 0 1.5rem 0 0.3rem;
 }
+
 .rank .klist p:last-child span {
   margin-right: 0.8rem;
 }
