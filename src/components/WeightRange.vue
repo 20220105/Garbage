@@ -24,7 +24,7 @@ export default {
   background-color: rgba(192, 192, 192, 0.1);
   border-radius: 0.6rem;
   height: 2.7999rem;
-  width: 100%;
+  width: 95%;
   text-align: center;
   line-height: 2.7999rem;
   overflow: hidden;

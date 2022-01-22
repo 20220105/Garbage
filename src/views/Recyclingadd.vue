@@ -42,7 +42,7 @@
     },
     methods: {
       onClickLeft(){
-        this.$router.push('/subscribe')
+        this.$router.go('-1')
       },
       onAdd() {
         this.$router.push('/addressedit')
@@ -65,4 +65,19 @@
   background-color: #25c89b !important;
   border-color:#25c89b !important;
 }
+
+::v-deep .van-nav-bar {
+  background-color: #25c89b;
+}
+::v-deep .van-nav-bar__title {
+  color: #fff;
+}
+
+::v-deep .van-icon-arrow-left:before {
+  color: white;
+}
+::v-deep .van-nav-bar__text {
+  color: white;
+}
+
 </style>
