@@ -9,30 +9,24 @@
       @click-left="onClickLeft"
     >
     </van-nav-bar>
-    <van-tree-select
-      height="38.5rem"
-      :items="items"
-      :main-active-index.sync="active"
-    >
-      <template #content>
-        <!-- 电子产品 -->
-        <div class="zheng">
-          <van-image
-            v-if="active === 0"
-            src="https://img01.yzcdn.cn/vant/apple-1.jpg"
+    <van-row>
+      <van-col :span="6">
+        <van-sidebar v-model="active">
+          <van-sidebar-item
+            @click="url(item.id)"
+            :title="item.name"
+            v-for="(item, index) in leftnavdata"
+            :key="index"
           />
-          <div class="you">测试商品1</div>
-          <div class="you">测试商品1</div>
-
-          <!-- 图片结束 -->
+        </van-sidebar>
+      </van-col>
+      <van-col :span="18" class="cells">
+        <div class="cell" v-for="(item2, index2) in rightdata" :key="index2">
+          <img :src="item2.img" alt="" />
+          <div class="title">{{ item2.name }}</div>
         </div>
-        <!-- 电子产品结束 -->
-        <van-image
-          v-if="active === 1"
-          src="https://img01.yzcdn.cn/vant/apple-2.jpg"
-        />
-      </template>
-    </van-tree-select>
+      </van-col>
+    </van-row>
 
     <!-- 底部导航栏 -->
     <van-tabbar v-model="activ" active-color="#25c89b" fixed>
@@ -50,22 +44,14 @@
 </template>
 
 <script>
+import data from "../static/data.json";
 export default {
   data() {
     return {
       active: 1,
       activ: 1,
-      items: [
-        { text: "电子产品" },
-        { text: "家电" },
-        { text: "陶瓷" },
-        { text: "塑料" },
-        { text: "铜" },
-        { text: "Dio" },
-        { text: "承太郎" },
-        { text: "徐伦" },
-        { text: "仗助" },
-      ],
+      leftnavdata: data.data.classify.left,
+      rightdata: data.data.classify.right[0].right_data,
     };
   },
   methods: {
@@ -74,6 +60,11 @@ export default {
     },
     onClickLeft() {
       this.$router.go(-1);
+    },
+    url(id) {
+      console.log(id);
+      this.rightdata = data.data.classify.right[id].right_data;
+      console.log(this.rightdata);
     },
   },
 };
@@ -126,5 +117,25 @@ export default {
 //头部的返回按钮样式
 ::v-deep .van-nav-bar__arrow {
   color: #fff;
+}
+.cells {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.cell {
+  width: 33.33%;
+  margin: 15px 0;
+}
+.cell img {
+  width: 100%;
+}
+.cell .title {
+  text-align: center;
+  font-size: 11px;
+  color: #666;
+}
+.van-sidebar {
+  width: 90px;
 }
 </style>

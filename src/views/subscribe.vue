@@ -127,7 +127,7 @@
               >
                 <!-- 客户选择预约时间  在vant组件的基础上通过传入filter函数,对选项数组进行过滤 -->
                 <van-datetime-picker
-                  style="position: absolute; width: 100%; left: 0; bottom: 0"
+                  style="position: absolute; width: 98%; left: 0; bottom: 0"
                   show-toolbar
                   type="datehour"
                   v-model="servicetime"

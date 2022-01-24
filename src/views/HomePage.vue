@@ -83,17 +83,22 @@
     <!-- 积分兑换结束 -->
 
     <div class="prods">
-      <div class="p-item" v-for="(item2, index2) in prodData" :key="index2">
+      <div
+        @click="clk(item2)"
+        class="p-item"
+        v-for="(item2, index2) in prodData"
+        :key="index2"
+      >
+        <img :src="require('../static/img/prod/' + item2.homeImg)" alt="" />
         <div class="p-item-title">
-          {{ item2.course_name }}
+          {{ item2.homeName }}
         </div>
-        <div class=".p-item-img"><img src="item2.img " alt=""></div>
-        <div class="p-item-tip">{{ item2.homeNametwo }}</div>
-
-        <div class="p-item-price">￥{{ item2.price }}</div>
+        <div class="p-item-tip">
+          {{ item2.homeNametwo }}
+        </div>
+        <div class="p-item-price">￥{{ item2.homePrice }}</div>
       </div>
     </div>
-    、
     <!-- 底部导航栏 -->
     <van-tabbar v-model="active" active-color="#25c89b" fixed>
       <van-tabbar-item icon="home-o" replace to="/HomePage"
@@ -110,20 +115,22 @@
 </template>
 
 <script>
-import courseData from "../data/course";
+import data from "../static/data.json";
 export default {
   data() {
     return {
-      prodData: courseData,
+      
       active: 0,
       value: "",
-      images: [
-        "https://img01.yzcdn.cn/vant/apple-1.jpg",
-        "https://img01.yzcdn.cn/vant/apple-2.jpg",
-      ],
-    };
+      prodData: data.data.home,
+ 
+   }
   },
   methods: {
+    clk(data) {
+      // console.log(data.id);
+      this.$router.push("./prodidx?id=" + data.id);
+    },
     onChange(index) {
       Notify({ type: "primary", message: index });
     },
@@ -141,6 +148,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .prods {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 55px;
+    }
+    .p-item {
+        width: 49.9%;
+        text-align: center;
+    }
+    .p-item img {
+        width: 100%
+    }
+    .p-item-title {
+        margin-top: 10px;
+        font-weight: 700;
+        font-size: 19px
+    }
+    .p-item-tip {
+        font-size: 12px;
+        color: #666;
+    }
+    .p-item-price {
+        color: red;
+        font-size: 19px;
+        margin: 10px;
+        font-weight: 700;
+    }
 .prods {
   display: flex;
   flex-wrap: wrap;
