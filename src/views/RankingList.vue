@@ -45,17 +45,24 @@
             <template #label>
               <div v-if="!rankingList">暂未排名</div>
               <!-- 排名 -->
-              <div class="card" v-for="(item, i) in rankingList" :key="i">
-                <van-image
-                  round
-                  width="25%"
-                  height="25%"
-                  :src="item.client_head_url"
-                  fit="cover"
-                />
-                <span>{{ item.nickname }}</span>
-                <span>￥{{ item.money_amoun | xiaoshudian }}</span>
-              </div>
+              <van-list
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="pullup"
+              >
+                <div class="card" v-for="(item, i) in rankingList" :key="i">
+                  <van-image
+                    round
+                    width="25%"
+                    height="25%"
+                    :src="item.client_head_url"
+                    fit="cover"
+                  />
+                  <span>{{ item.nickname }}</span>
+                  <span>￥{{ item.money_amoun | xiaoshudian }}</span>
+                </div>
+              </van-list>
             </template>
           </van-cell>
         </div>
@@ -81,6 +88,9 @@ export default {
     return {
       h: "",
       rankingList: [],
+      loading: false,
+      finished: false,
+      page: 2,
     }
   },
   methods: {
@@ -98,18 +108,34 @@ export default {
       console.log(this.h)
     },
     // page页数 pageNum每页多少数据
-    getRankingList(page, pageNum) {
-      let url = `/rankingList/${page}/${pageNum}`
+    getRankingList(page) {
+      let url = `/rankingList/${page}/6`
       this.axios.get(url).then((res) => {
         this.rankingList.push(...res.data.results)
-        console.log(this.rankingList)
+
+        console.log("result", res.data.results)
       })
+    },
+    pullup() {
+      console.log("length", this.rankingList.length)
+      if (this.rankingList.length % 6 > 0) {
+        // 加载状态结束
+        this.loading = false
+        return
+      } else {
+        this.page++
+        let page = this.page
+        console.log("page", page)
+        this.getRankingList(page, 6)
+        // 加载状态结束
+        this.loading = false
+      }
     },
   },
   mounted() {
     this.windowHeight()
-    this.getRankingList(1, 6)
-    this.getRankingList(2, 6)
+    this.getRankingList(1)
+    this.getRankingList(2)
   },
   filters: {
     // 过滤器

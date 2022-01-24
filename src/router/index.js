@@ -5,6 +5,21 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: "/invitationList",
+    name: "InvitationList",
+    component: () => import("../views/InvitationList.vue"),
+  },
+  {
+    path: "/customerService",
+    name: "CustomerService",
+    component: () => import("../views/CustomerService.vue"),
+  },
+  {
+    path: "/feedback",
+    name: "Feedback",
+    component: () => import("../views/Feedback.vue"),
+  },
+  {
     path: "/results",
     name: "Results",
     component: () => import("../views/Results.vue"),

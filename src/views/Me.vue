@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: #f3f2f2">
     <!-- 标题栏 -->
-    <van-nav-bar @load="isLogin" title="我的"></van-nav-bar>
+    <van-nav-bar title="我的"></van-nav-bar>
 
     <div class="head_money">
       <div class="ss">
@@ -115,19 +115,19 @@
             />
             <span>邀请有礼</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item to="/invitationList">
             <van-icon name="orders-o" size="2.3rem" color="#75e7a2" />
             <span>邀请列表</span>
           </van-grid-item>
-          <van-grid-item class="left">
+          <van-grid-item class="left" to="/feedback">
             <van-icon name="envelop-o" size="2.3rem" color="#75e7a2" />
             <span>意见反馈</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item to="/customerService">
             <van-icon name="service-o" size="2.3rem" color="#75e7a2" />
             <span>客服</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item to="/recyclingadd">
             <van-icon name="location-o" size="2.3rem" color="#75e7a2" />
             <span>回收地址</span>
           </van-grid-item>
