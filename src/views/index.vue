@@ -65,7 +65,9 @@
           />
           <van-grid :border="false" :column-num="3">
             <van-grid-item>
-              <h1 style="color: #25c89b">{{ money.money_amoun }}</h1>
+              <h1 style="color: #25c89b">
+                {{ money.money_amoun | xiaoshudian }}
+              </h1>
               <span>环保金额</span>
             </van-grid-item>
             <van-grid-item>
@@ -256,6 +258,14 @@ export default {
   mounted() {
     this.getuser()
   },
+  filters: {
+    // 保留两位小数点
+    xiaoshudian(value) {
+      var toFixedNum = Number(value).toFixed(3)
+      var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1)
+      return realVal
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -349,6 +359,7 @@ export default {
 .van-grid-item__content--center > h1 {
   font-weight: 300;
   margin: 0 0 1rem 0;
+  font-size: 1.9rem;
 }
 // 底部导航栏
 ::v-deep .bottom_nav {

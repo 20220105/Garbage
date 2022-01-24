@@ -43,7 +43,7 @@
             >
               <span>我的积分</span>
               <span v-if="!$store.state.islogin">0.00</span>
-              <span v-else>{{ 0.0 }}</span>
+              <span v-else>{{ jifen }}</span>
             </van-grid-item>
           </van-grid>
         </div>
@@ -103,6 +103,7 @@ export default {
       finished: false,
       page: 2,
       paiming_num: "",
+      jifen: "",
     }
   },
   methods: {
@@ -117,7 +118,7 @@ export default {
         (de && de.offsetHeight) ||
         document.body.offsetHeight
       this.h = h
-      console.log(this.h)
+      // console.log(this.h)
     },
     // page页数 pageNum每页多少数据
     getRankingList(page) {
@@ -145,13 +146,15 @@ export default {
     },
     paiming() {
       let list = this.rankingList
-      console.log("list", list)
+      // console.log("list", list)
       // console.log("object")
       let name = sessionStorage.getItem("name")
-      console.log(name)
+      // console.log(name)
       for (const key in list) {
         if (list[key].nickname == name) {
           this.paiming_num = key * 1 + 1
+          this.jifen = list[key].integral
+          // console.log(this.jifen)
           return
         }
       }

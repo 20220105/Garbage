@@ -15,12 +15,16 @@ Vue.use(Vant)
 import axios from "axios"
 axios.defaults.baseURL = "http://localhost:3000/"
 
+Vue.prototype.axios = axios
+Vue.prototype.$axios = axios
+
 // 引入复制组件
 import VueClipboard from "vue-clipboard2"
 Vue.use(VueClipboard)
 
-Vue.prototype.axios = axios
-Vue.prototype.$axios = axios
+// 引入时间处理组件
+import moment from "moment"
+Vue.prototype.$moment = moment
 
 new Vue({
   router,

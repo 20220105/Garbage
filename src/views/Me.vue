@@ -45,7 +45,7 @@
       <div class="eco-gold">
         <van-grid :border="false" :column-num="3">
           <van-grid-item>
-            <h1>{{ money.money_amoun }}</h1>
+            <h1>{{ money.money_amoun | xiaoshudian }}</h1>
             <span>环保金额</span>
           </van-grid-item>
           <van-grid-item>
@@ -61,7 +61,12 @@
     </div>
     <div class="body">
       <van-grid direction="horizontal" :column-num="2" class="tixianMingxi">
-        <van-grid-item icon="balance-list-o" text="收入明细" class="shouru" />
+        <van-grid-item
+          icon="balance-list-o"
+          text="收入明细"
+          class="shouru"
+          :to="{ path: '/income', query: { money: money.money_amoun } }"
+        />
         <van-grid-item icon="after-sale" text="去提现" class="tixian" />
       </van-grid>
       <div class="recycling-process">
@@ -180,7 +185,6 @@
 </template>
 
 <script>
-import Clipboard from "clipboard"
 export default {
   data() {
     return {
@@ -229,7 +233,7 @@ export default {
       let url = `/money_amoun/${id}`
       this.axios.get(url).then((res) => {
         this.money = res.data.results[0]
-        console.log(this.money)
+        // console.log(this.money)
       })
     },
     // 分享  复制链接
@@ -246,6 +250,14 @@ export default {
   mounted() {
     // this.isLogin()
     this.getuser()
+  },
+  filters: {
+    // 保留两位小数点
+    xiaoshudian(value) {
+      var toFixedNum = Number(value).toFixed(3)
+      var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1)
+      return realVal
+    },
   },
 }
 </script>
