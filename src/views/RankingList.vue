@@ -15,9 +15,9 @@
           <van-grid :border="false" :column-num="3">
             <van-grid-item class="head_foot">
               <span>我的排名</span>
-              <span>1</span>
+              <span>{{ paiming_num }}</span>
             </van-grid-item>
-            <van-grid-item>
+            <van-grid-item v-if="!$store.state.islogin">
               <van-image
                 round
                 width="60%"
@@ -25,14 +25,25 @@
                 src="/head_portrait/002.jpg"
                 fit="cover"
               />
-              <h4>避嫌</h4>
+              <h4>未登录</h4>
+            </van-grid-item>
+            <van-grid-item v-else>
+              <van-image
+                round
+                width="60%"
+                height="60%"
+                :src="$store.state.url"
+                fit="cover"
+              />
+              <h4>{{ $store.state.nickname }}</h4>
             </van-grid-item>
             <van-grid-item
               class="head_foot"
               style="border-radius: 0rem 1rem 1rem 0rem"
             >
               <span>我的积分</span>
-              <span>0.00</span>
+              <span v-if="!$store.state.islogin">0.00</span>
+              <span v-else>{{ 0.0 }}</span>
             </van-grid-item>
           </van-grid>
         </div>
@@ -91,6 +102,7 @@ export default {
       loading: false,
       finished: false,
       page: 2,
+      paiming_num: "",
     }
   },
   methods: {
@@ -112,12 +124,12 @@ export default {
       let url = `/rankingList/${page}/6`
       this.axios.get(url).then((res) => {
         this.rankingList.push(...res.data.results)
-
-        console.log("result", res.data.results)
+        this.paiming()
+        // console.log(this.rankingList)
       })
     },
     pullup() {
-      console.log("length", this.rankingList.length)
+      // console.log("length", this.rankingList.length)
       if (this.rankingList.length % 6 > 0) {
         // 加载状态结束
         this.loading = false
@@ -125,10 +137,23 @@ export default {
       } else {
         this.page++
         let page = this.page
-        console.log("page", page)
         this.getRankingList(page, 6)
+        this.paiming()
         // 加载状态结束
         this.loading = false
+      }
+    },
+    paiming() {
+      let list = this.rankingList
+      console.log("list", list)
+      // console.log("object")
+      let name = sessionStorage.getItem("name")
+      console.log(name)
+      for (const key in list) {
+        if (list[key].nickname == name) {
+          this.paiming_num = key * 1 + 1
+          return
+        }
       }
     },
   },
@@ -136,6 +161,7 @@ export default {
     this.windowHeight()
     this.getRankingList(1)
     this.getRankingList(2)
+    this.paiming()
   },
   filters: {
     // 过滤器
