@@ -103,6 +103,26 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+// 头部背景样式
+::v-deep .van-nav-bar {
+  background-color: #25c89b;
+}
+//标题样式
+::v-deep .van-nav-bar__title {
+  color: #fff;
+}
+// 头部返回按钮旁边的文字
+::v-deep .van-nav-bar__text {
+  color: #fff;
+}
+//头部的返回按钮样式
+::v-deep .van-nav-bar__arrow {
+  color: #fff;
+}
+.van-nav-bar__right{
+  a{
+    color: #fff;
+  }
+}
 </style>
