@@ -9,7 +9,7 @@
       <van-tab title="支出明细">
         <van-empty description="暂无记录" v-if="!income.length" />
         <div v-else v-for="(item, i) in income" :key="i">
-          <van-cell :border="false" :value="'+' + item.extend_price + '元'">
+          <van-cell :border="false" :value="'-' + item.extend_price + '元'">
             <template #title>
               <div>{{ item.extend_name }}</div>
               <div class="date">{{ item.extend_data | Date }}</div>
@@ -20,7 +20,7 @@
       <van-tab title="收入明细"
         ><van-empty description="暂无记录" v-if="!income.length" />
         <div v-else v-for="(item, i) in income" :key="i">
-          <van-cell :border="false" :value="'-' + item.extend_price + '元'">
+          <van-cell :border="false" :value="'+' + item.extend_price + '元'">
             <template #title>
               <div>{{ item.extend_name }}</div>
               <div class="date">{{ item.extend_data | Date }}</div>

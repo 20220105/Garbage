@@ -358,8 +358,8 @@ export default {
 }
 .van-grid-item__content--center > h1 {
   font-weight: 300;
-  margin: 0 0 1rem 0;
-  font-size: 1.9rem;
+  margin: 0 0 1.3rem 0;
+  font-size: 1.5rem;
 }
 // 底部导航栏
 ::v-deep .bottom_nav {

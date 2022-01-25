@@ -67,7 +67,12 @@
           class="shouru"
           :to="{ path: '/income', query: { money: money.money_amoun } }"
         />
-        <van-grid-item icon="after-sale" text="去提现" class="tixian" />
+        <van-grid-item
+          icon="after-sale"
+          text="去提现"
+          class="tixian"
+          :to="{ path: '/withdrawal', query: { money: money.money_amoun } }"
+        />
       </van-grid>
       <div class="recycling-process">
         <van-notice-bar
