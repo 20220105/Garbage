@@ -19,7 +19,7 @@
           />
         </router-link>
         <router-link
-          to="/login"
+          to="/personal"
           class="click_login"
           v-if="$store.state.islogin"
         >
