@@ -9,7 +9,7 @@
       >
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <p>刷新次数: {{ count }}</p>
-          
+
           <van-empty
             class="custom-image"
             image="/暂无订单.png"
@@ -36,7 +36,8 @@
 export default {
   data() {
     return {
-      dd:false,
+      dd: false,
+      active: "",
       count: 0,
       isLoading: true,
       chosenAddressId: "1",
@@ -63,24 +64,24 @@ export default {
           address: "浙江省杭州市滨江区江南大道 15 号",
         },
       ],
-    };
+    }
   },
   methods: {
     onRefresh() {
       setTimeout(() => {
-        this.$toast("刷新成功");
-        this.isLoading = false;
-        this.count++;
-      }, 1000);
+        this.$toast("刷新成功")
+        this.isLoading = false
+        this.count++
+      }, 1000)
     },
     onAdd() {
-      Toast("新增地址");
+      Toast("新增地址")
     },
     onEdit(item, index) {
-      Toast("编辑地址:" + index);
+      Toast("编辑地址:" + index)
     },
   },
-};
+}
 </script>
 
 <style scoped>
