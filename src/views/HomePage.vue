@@ -21,28 +21,28 @@
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="#25c89b">
       <van-swipe-item>
         <van-image
-          width="21rem"
+          width="23.5rem"
           height="10rem"
           fit="cover"
           src="https://img.zcool.cn/community/01453560e6ae3311013eaf70170ab2.jpg@1280w_1l_2o_100sh.jpg"
       /></van-swipe-item>
       <van-swipe-item>
         <van-image
-          width="21rem"
+          width="23.5rem"
           height="10rem"
           fit="cover"
           src="https://img.zcool.cn/community/01155261dfe3fe11013f01cd7b2ca2.jpg@1280w_1l_2o_100sh.jpg"
       /></van-swipe-item>
       <van-swipe-item>
         <van-image
-          width="21rem"
+          width="23.5rem"
           height="10rem"
           fit="cover"
           src="https://img.zcool.cn/community/019f6c6188f89c11013e894316d315.jpg@1280w_1l_2o_100sh.jpg"
       /></van-swipe-item>
       <van-swipe-item>
         <van-image
-          width="21rem"
+          width="23.5rem"
           height="10rem"
           fit="cover"
           src="https://img.zcool.cn/community/01a05561df9c4d11013e8cd0376ad0.gif"
@@ -111,6 +111,12 @@
         >我的</van-tabbar-item
       >
     </van-tabbar>
+  <!-- 分割线 -->
+    <van-divider
+  :style="{ color: '#25c89b', borderColor: '#25c89b', padding: '4rem 2rem' }"
+>
+  不能在深了 哦!
+</van-divider>
   </div>
 </template>
 
