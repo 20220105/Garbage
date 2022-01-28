@@ -1,11 +1,11 @@
 <template>
   <div>
-    <van-tabs swipeable animated>
+    <van-tabs swipeable animated v-model="active">
       <van-tab
-        v-model="active"
-        v-for="index in 8"
+        v-for="(item, index) in states"
         :key="index"
-        :title="'标签 ' + index"
+        :title="item.state_name"
+        :name="index"
       >
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <p>刷新次数: {{ count }}</p>
@@ -34,8 +34,10 @@
 
 <script>
 export default {
+  props: ["StateActive"],
   data() {
     return {
+      states: "",
       dd: false,
       active: "",
       count: 0,
@@ -75,12 +77,26 @@ export default {
       }, 1000)
     },
     onAdd() {
-      Toast("新增地址")
+      // Toast("新增地址")
+      this.active = this.StateActive
     },
     onEdit(item, index) {
       Toast("编辑地址:" + index)
     },
+    getState() {
+      this.active = Number(this.StateActive)
+      console.log("状态参数", this.StateActive)
+      console.log("是否修改值", this.active)
+      this.axios.get("/getState").then((res) => {
+        this.states = res.data.results
+        // console.log(this.states)
+      })
+    },
   },
+  mounted() {
+    this.getState()
+  },
+  created() {},
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-nav-bar title="订单"></van-nav-bar>
-    <o-tabs></o-tabs>
+    <o-tabs :StateActive="this.$route.query.pageActive"></o-tabs>
     <!-- 底部导航栏 -->
     <van-tabbar
       class="bottom_nav"
@@ -32,9 +32,20 @@ export default {
   data() {
     return {
       active: 1,
+      pageActive: 3,
     }
   },
-  methods: {},
+  methods: {
+    getactive() {
+      // this.pageActive = this.$route.query.pageActive
+      // this.pageActive = this.pageActive
+      // console.log("状态", this.pageActive)
+    },
+  },
+  mounted() {},
+  created() {
+    this.getactive()
+  },
 }
 </script>
 
