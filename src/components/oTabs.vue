@@ -1,32 +1,27 @@
 <template>
   <div>
-    <van-tabs swipeable animated v-model="active">
+    <van-tabs swipeable animated v-model="active" @click="onClick">
       <van-tab
         v-for="(item, index) in states"
         :key="index"
         :title="item.state_name"
         :name="index"
       >
-        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-          <p>刷新次数: {{ count }}</p>
-
-          <van-empty
-            class="custom-image"
-            image="/暂无订单.png"
-            description="暂无订单"
-            v-if="dd"
-          />
-          <van-address-list
-            v-model="chosenAddressId"
-            :list="list"
-            :disabled-list="disabledList"
-            disabled-text="以下地址超出配送范围"
-            default-tag-text="默认"
-            @add="onAdd"
-            @edit="onEdit"
-            v-else
-          />
-        </van-pull-refresh>
+        <!--  -->
+        <van-swipe-cell v-for="(order, i) in orders" :key="i">
+          <van-cell
+            :border="false"
+            :title="order.sortChoice + '/' + order.w_range"
+            :value="`联系电话:${order.collector_phone}`"
+          >
+            <template #label>
+              订单编号:A1452244&nbsp;&nbsp;{{ order.state_name }}</template
+            >
+          </van-cell>
+          <template #right>
+            <van-button square type="danger" text="取消订单" />
+          </template>
+        </van-swipe-cell>
       </van-tab>
     </van-tabs>
   </div>
@@ -38,58 +33,48 @@ export default {
   data() {
     return {
       states: "",
-      dd: false,
+      stateID: "",
       active: "",
-      count: 0,
-      isLoading: true,
-      chosenAddressId: "1",
-      list: [
-        {
-          id: "1",
-          name: "张三",
-          tel: "13000000000",
-          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
-          isDefault: true,
-        },
-        {
-          id: "2",
-          name: "李四",
-          tel: "1310000000",
-          address: "浙江省杭州市拱墅区莫干山路 50 号",
-        },
-      ],
-      disabledList: [
-        {
-          id: "3",
-          name: "王五",
-          tel: "1320000000",
-          address: "浙江省杭州市滨江区江南大道 15 号",
-        },
-      ],
+      orders: "",
     }
   },
   methods: {
-    onRefresh() {
-      setTimeout(() => {
-        this.$toast("刷新成功")
-        this.isLoading = false
-        this.count++
-      }, 1000)
-    },
-    onAdd() {
-      // Toast("新增地址")
-      this.active = this.StateActive
-    },
-    onEdit(item, index) {
-      Toast("编辑地址:" + index)
-    },
     getState() {
-      this.active = Number(this.StateActive)
-      console.log("状态参数", this.StateActive)
-      console.log("是否修改值", this.active)
+      let uid = sessionStorage.getItem("id")
+      // console.log("uid", uid)
+      if (this.StateActive == undefined || this.StateActive == 0) {
+        this.active = 0
+        this.stateID = ""
+      } else {
+        this.active = this.StateActive * 1
+        this.stateID = this.active + 1
+      }
+      // console.log("状态参数", this.StateActive)
+      // console.log("是否修改值", this.active)
       this.axios.get("/getState").then((res) => {
         this.states = res.data.results
         // console.log(this.states)
+      })
+
+      let params = `uid=${uid}&stateId=${this.stateID}`
+      this.axios.post("/search_orders", params).then((res) => {
+        this.orders = res.data.results
+        // console.log(this.orders)
+      })
+    },
+    onClick(name, title) {
+      // console.log(name, title)
+      if (name == 0) {
+        this.stateID = ""
+      } else {
+        this.stateID = name + 1
+      }
+      // console.log("stateID", this.stateID)
+      let uid = sessionStorage.getItem("id")
+      let params = `uid=${uid}&stateId=${this.stateID}`
+      this.axios.post("/search_orders", params).then((res) => {
+        this.orders = res.data.results
+        // console.log(this.orders)
       })
     },
   },
