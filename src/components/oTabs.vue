@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-tabs swipeable animated v-model="active" @click="onClick">
+    <van-tabs animated v-model="active" @click="onClick">
       <van-tab
         v-for="(item, index) in states"
         :key="index"
@@ -8,20 +8,35 @@
         :name="index"
       >
         <!--  -->
-        <van-swipe-cell v-for="(order, i) in orders" :key="i">
-          <van-cell
-            :border="false"
-            :title="order.sortChoice + '/' + order.w_range"
-            :value="`联系电话:${order.collector_phone}`"
-          >
-            <template #label>
-              订单编号:A1452244&nbsp;&nbsp;{{ order.state_name }}</template
+        <template v-if="orders.length != 0">
+          <van-swipe-cell v-for="(order, i) in orders" :key="i">
+            <van-cell
+              :border="false"
+              :title="order.sortChoice + '/' + order.w_range"
+              :value="`联系电话:${order.collector_phone}`"
             >
-          </van-cell>
-          <template #right>
-            <van-button square type="danger" text="取消订单" />
-          </template>
-        </van-swipe-cell>
+              <template #label>
+                订单编号:{{ order.order_num }}&nbsp;&nbsp;{{
+                  order.state_name
+                }}</template
+              >
+            </van-cell>
+            <template #right v-if="order.state_id * 1 != 7">
+              <van-button
+                square
+                type="danger"
+                text="取消订单"
+                @click="cancelOrder(order.order_id, order.state_name)"
+              />
+            </template>
+            <template #right v-else>
+              <van-button disabled square type="danger" text="已取消订单" />
+            </template>
+          </van-swipe-cell>
+        </template>
+        <div v-else-if="orders.length == 0">
+          <van-empty description="暂无订单" />
+        </div>
       </van-tab>
     </van-tabs>
   </div>
@@ -59,7 +74,7 @@ export default {
       let params = `uid=${uid}&stateId=${this.stateID}`
       this.axios.post("/search_orders", params).then((res) => {
         this.orders = res.data.results
-        // console.log(this.orders)
+        console.log(this.orders)
       })
     },
     onClick(name, title) {
@@ -77,11 +92,28 @@ export default {
         // console.log(this.orders)
       })
     },
+    cancelOrder(val, state) {
+      this.$dialog
+        .confirm({
+          title: "取消订单",
+          message: `该订单${state},是否确认取消订单,如操作失误请点击取消`,
+        })
+        .then(() => {
+          // console.log(val)
+          let url = `/cancelOrder/${val}`
+          this.axios.get(url).then((res) => {
+            this.$toast.success("已取消订单")
+            this.onClick()
+          })
+        })
+        .catch(() => {
+          this.$toast("已取消该操作")
+        })
+    },
   },
   mounted() {
     this.getState()
   },
-  created() {},
 }
 </script>
 
@@ -95,5 +127,8 @@ export default {
 }
 ::v-deep .van-empty__description {
   margin-top: 8em;
+}
+::v-deep .van-empty__image img {
+  height: 100% !important;
 }
 </style>
