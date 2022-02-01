@@ -14,6 +14,10 @@
               :border="false"
               :title="order.sortChoice + '/' + order.w_range"
               :value="`联系电话:${order.collector_phone}`"
+              :to="{
+                path: '/orderDetails',
+                query: { orderID: order.order_id },
+              }"
             >
               <template #label>
                 订单编号:{{ order.order_num }}&nbsp;&nbsp;{{
@@ -74,7 +78,7 @@ export default {
       let params = `uid=${uid}&stateId=${this.stateID}`
       this.axios.post("/search_orders", params).then((res) => {
         this.orders = res.data.results
-        console.log(this.orders)
+        // console.log(this.orders)
       })
     },
     onClick(name, title) {

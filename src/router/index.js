@@ -5,9 +5,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/updatePwd',
-    name: 'UpdatePwd',
-    component: () => import('../views/UpdatePwd.vue'),
+    path: "/orderDetails",
+    name: "OrderDetails",
+    component: () => import("../views/OrderDetails.vue"),
+  },
+  {
+    path: "/updatePwd",
+    name: "UpdatePwd",
+    component: () => import("../views/UpdatePwd.vue"),
   },
   {
     path: "/personal",
