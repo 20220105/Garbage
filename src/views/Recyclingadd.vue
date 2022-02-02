@@ -51,7 +51,9 @@ export default {
       this.$router.push({ name: "addressedit", query: { Edit: item } })
     },
     onSelect(item, index) {
-      this.$store.commit("address/changeSelection", index.toString())
+      console.log(item, index)
+      console.log(item.id)
+      this.$store.commit("address/changeSelection", item)
     },
     currentSelect() {
       // return this.$store.state.address.currentSelectId
@@ -71,7 +73,7 @@ export default {
             city: "",
             county: "",
             postalCode: item.areaCode,
-            province: "",
+            province: "北京",
           }
           return temp
         })

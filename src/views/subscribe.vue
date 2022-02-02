@@ -155,7 +155,7 @@
                 :class="{ content: true, active: currentAddress != '' }"
                 @click="changeAddress"
               >
-              <!-- 三目运算符 -->
+                <!-- 三目运算符 -->
                 {{ currentAddress != "" ? currentAddress : "请选择预约地址" }}
               </div>
               <van-icon name="arrow" color="#c0c0c0" size="16px"></van-icon>
@@ -293,6 +293,7 @@ export default {
       currentAddress: "", //当前填写的地址
       currentGeo: [], //当前填写的地址转换为经纬度,
       now: null, //时间选择器用的，用于初始化时间选择器的最小时间
+      temp: "",
     }
   },
   mounted() {
@@ -414,14 +415,35 @@ export default {
       )
     },
     currentAddr() {
+      // console.log("a", this.$store.state.address)
       if (this.$store.state.address.currentSelectId === "-1") {
-        return ""
+        let params = `uid=${sessionStorage.getItem("id")}`
+        this.axios.post("/morenAddress", params).then((res) => {
+          console.log(res)
+          let list = res.data.result
+          let temp = {
+            id: list.address_id,
+            tel: list.phone,
+            name: list.name,
+            address: list.address_text,
+            isDefault: list.ismoren,
+            addressDetail: list.address_text,
+            areaCode: list.areaCode,
+            city: "",
+            county: "",
+            postalCode: list.areaCode,
+            province: "",
+          }
+          this.temp = temp
+          let addr =
+            temp.province + temp.city + temp.county + temp.addressDetail
+          this.currentAddress = addr
+        })
       } else {
-        let temp =
-          this.$store.state.address.address[
-            Number.parseInt(this.$store.state.address.currentSelectId)
-          ]
+        let temp = this.$store.state.address.currentSelectId
+        console.log("temp", temp)
         let addr = temp.province + temp.city + temp.county + temp.addressDetail
+        // console.log(addr)
         this.currentAddress = addr
         return addr
       }
