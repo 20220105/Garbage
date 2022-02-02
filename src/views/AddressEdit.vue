@@ -34,18 +34,20 @@ export default {
       currentArea: [], //当前地区
       searchResult: [{}], //搜索结果
       addressID: "",
+      initAddressInfo: {},
+      id: "",
     }
   },
   // AddressEdit 地址编辑
-  computed: {
-    initAddressInfo() {
-      if (this.$route.params.id !== undefined) {
-        return this.$store.state.address.address.find(
-          (val) => val.id === this.$route.params.id
-        )
-      } else return undefined
-    },
-  },
+  // computed: {
+  //   initAddressInfo() {
+  //     if (this.$route.query.Edit.id !== undefined) {
+  //       return this.$store.state.address.address.find(
+  //         (val) => val.id === this.$route.query.Edit.id
+  //       )
+  //     } else return undefined
+  //   },
+  // },
 
   methods: {
     async searchPoi(val, area) {
@@ -97,7 +99,7 @@ export default {
     // 整理数据,存入vuex,指定不同的数据源
     onSave(content) {
       let temp = {
-        id: this.$route.params.id,
+        // id: this.$route.query.Edit.id,
         addressDetail: content.addressDetail,
         areaCode: this.currentArea[2]?.code || content.areaCode,
         city: this.currentArea[1]?.name || content.city,
@@ -111,20 +113,41 @@ export default {
       // 获取用户id
       let uid = sessionStorage.getItem("id")
       let params = `addressText=${temp.addressDetail}&uid=${uid}&name=${temp.name}&phone=${temp.tel}&areaCode=${temp.areaCode}`
-      this.axios.post("/insertAddress", params).then((res) => {
-        console.log(res)
-        this.addressID = res.data.result.insertId
-        this.$store.commit("address/pushAddress", temp)
-        this.$toast.success("添加成功")
-        console.log(temp)
-        if (temp.isDefault == true) {
-          params = `addressId=${this.addressID}&uid=${uid}`
-          this.axios.post("/updateMorenAddress", params).then((res) => {
-            console.log("默认地址", res)
-          })
-        }
-        this.$router.push("/recyclingadd")
-      })
+      console.log(params, temp.id)
+      if (this.id == undefined) {
+        this.axios.post("/insertAddress", params).then((res) => {
+          console.log(res)
+          this.addressID = res.data.result.insertId
+          this.$store.commit("address/pushAddress", temp)
+          this.$toast.success("添加成功")
+          console.log(temp)
+          if (temp.isDefault == true) {
+            params = `addressId=${this.addressID}&uid=${uid}`
+            this.axios.post("/updateMorenAddress", params).then((res) => {
+              console.log("默认地址", res)
+            })
+          }
+          this.$router.push("/recyclingadd")
+        })
+      } else {
+        params = `addressText=${temp.addressDetail}&name=${temp.name}&phone=${temp.tel}&areaCode=${temp.areaCode}&addressID=${this.initAddressInfo.id}`
+        console.log(params)
+        this.axios.post("/EditAddress", params).then((res) => {
+          console.log(res)
+          // this.$store.commit("address/pushAddress", temp)
+          this.$toast.success("修改成功")
+          console.log(temp)
+          this.$router.push("/recyclingadd")
+          this.addressID = this.initAddressInfo.id
+          if (temp.isDefault == true) {
+            params = `addressId=${this.addressID}&uid=${uid}`
+            console.log(params)
+            this.axios.post("/updateMorenAddress", params).then((res) => {
+              console.log("默认地址", res)
+            })
+          }
+        })
+      }
     },
     onDelete(content) {
       if (content.id !== undefined) {
@@ -147,6 +170,14 @@ export default {
         this.searchResult = []
       }
     },
+    onEdit() {
+      let list = this.$route.query.Edit
+      this.initAddressInfo = list
+      if (this.initAddressInfo == undefined) {
+        return (this.id = undefined)
+      }
+      console.log(this.initAddressInfo)
+    },
     // 避免搜出来的地区和上面选的地区不一致,保存搜到的地址数据
     onSelectArea(val) {
       this.currentArea = [
@@ -164,6 +195,9 @@ export default {
         },
       ]
     },
+  },
+  mounted() {
+    this.onEdit()
   },
 }
 </script>
