@@ -54,6 +54,7 @@ export default {
       console.log(item, index)
       console.log(item.id)
       this.$store.commit("address/changeSelection", item)
+      this.$router.go(-1)
     },
     currentSelect() {
       // return this.$store.state.address.currentSelectId

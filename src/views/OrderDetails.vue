@@ -23,7 +23,7 @@
     </van-steps>
     <van-panel
       :title="`订单号:${order.order_num}`"
-      :desc="`回收类型:${order.sortChoice} 重量:${order.w_range}`"
+      :desc="`类型:${order.sortChoice} 重量:${order.w_range}`"
       :status="order.state_name"
     >
       <van-cell-group inset>
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.go(-1)
+      this.$router.push("/the_order")
     },
     getOrder() {
       let params = `orderId=${this.$route.query.orderID}`
@@ -129,5 +129,10 @@ export default {
 //头部的返回按钮样式
 ::v-deep .van-nav-bar__arrow {
   color: #fff;
+}
+.van-cell,
+::v-deep .van-collapse-item__content,
+::v-deep .van-cell__title {
+  font-size: 0.7rem;
 }
 </style>

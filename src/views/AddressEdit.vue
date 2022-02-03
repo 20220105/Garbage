@@ -125,9 +125,9 @@ export default {
             params = `addressId=${this.addressID}&uid=${uid}`
             this.axios.post("/updateMorenAddress", params).then((res) => {
               console.log("默认地址", res)
+              this.$router.go("-1")
             })
           }
-          this.$router.push("/recyclingadd")
         })
       } else {
         params = `addressText=${temp.addressDetail}&name=${temp.name}&phone=${temp.tel}&areaCode=${temp.areaCode}&addressID=${this.initAddressInfo.id}`
@@ -137,13 +137,13 @@ export default {
           // this.$store.commit("address/pushAddress", temp)
           this.$toast.success("修改成功")
           console.log(temp)
-          this.$router.push("/recyclingadd")
           this.addressID = this.initAddressInfo.id
           if (temp.isDefault == true) {
             params = `addressId=${this.addressID}&uid=${uid}`
             console.log(params)
             this.axios.post("/updateMorenAddress", params).then((res) => {
               console.log("默认地址", res)
+              this.$router.go("-1")
             })
           }
         })

@@ -20,7 +20,7 @@
               }"
             >
               <template #label>
-                订单编号:{{ order.order_num }}&nbsp;&nbsp;{{
+                {{ order.order_num }}&nbsp;&nbsp;{{
                   order.state_name
                 }}</template
               >
