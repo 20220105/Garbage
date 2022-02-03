@@ -36,6 +36,7 @@ export default {
       addressID: "",
       initAddressInfo: {},
       id: "",
+      morenAddressId: "",
     }
   },
   // AddressEdit 地址编辑
@@ -149,15 +150,28 @@ export default {
         })
       }
     },
+    morenAddressID() {
+      let params = `uid=${sessionStorage.getItem("id")}&`
+      this.axios.post("/morenAddress", params).then((res) => {
+        // console.log("res", res)
+        if (res.data.result) this.morenAddressId = res.data.result.address_id
+      })
+    },
     onDelete(content) {
-      if (content.id !== undefined) {
-        this.$store.commit("address/removeAddress", content.id)
-        console.log(content.id)
-        alert("删除成功")
-        this.$router.push("/recyclingadd")
-      } else {
-        this.$router.push("/recyclingadd")
+      console.log("content", content)
+      if (content.id == this.morenAddressId) {
+        let params = `uid=${sessionStorage.getItem("id")}&addressId=`
+        console.log(params)
+        this.axios.post("/updateMorenAddress", params).then((res) => {
+          console.log(res)
+        })
       }
+      this.axios
+        .post("/deleteAddress", `addressId=${content.id}`)
+        .then((res) => {
+          this.$toast.success("删除地址成功")
+          this.$router.go("-1")
+        })
     },
     // 详细地址框输入的实时搜索地址功能
     async onChangeDetail(val) {
@@ -198,6 +212,7 @@ export default {
   },
   mounted() {
     this.onEdit()
+    this.morenAddressID()
   },
 }
 </script>

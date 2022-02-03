@@ -308,7 +308,6 @@ export default {
   },
 
   methods: {
-    //
     huishouyuan() {
       // 加载回收员
       this.axios.post("/collectorUsers").then((res) => {
@@ -539,19 +538,19 @@ export default {
       if (this.$store.state.address.currentSelectId === "-1") {
         let params = `uid=${sessionStorage.getItem("id")}`
         this.axios.post("/morenAddress", params).then((res) => {
-          // console.log(res)
           let list = res.data.result
+          console.log(list)
           let temp = {
-            id: list.address_id,
-            tel: list.phone,
-            name: list.name,
-            address: list.address_text,
-            isDefault: list.ismoren,
-            addressDetail: list.address_text,
-            areaCode: list.areaCode,
+            id: !list ? "" : list.address_id,
+            tel: !list ? "" : list.phone,
+            name: !list ? "" : list.name,
+            address: !list ? "" : list.address_text,
+            isDefault: !list ? "" : list.ismoren,
+            addressDetail: !list ? "" : list.address_text,
+            areaCode: !list ? "" : list.areaCode,
             city: "",
             county: "",
-            postalCode: list.areaCode,
+            postalCode: !list ? "" : list.areaCode,
             province: "",
           }
           this.temp = temp
