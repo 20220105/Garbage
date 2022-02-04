@@ -240,6 +240,7 @@ export default {
     // },
     getuser() {
       let id = sessionStorage.getItem("id")
+      if (id == null) return
       this.userId = id
       let url = `/money_amoun/${id}`
       this.axios.get(url).then((res) => {

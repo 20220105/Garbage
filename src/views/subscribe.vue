@@ -309,6 +309,7 @@ export default {
 
   methods: {
     huishouyuan() {
+      if (sessionStorage.getItem("id") == null) return
       // 加载回收员
       this.axios.post("/collectorUsers").then((res) => {
         // console.log(res)
@@ -535,6 +536,7 @@ export default {
     },
     currentAddr() {
       // console.log("a", this.$store.state.address)
+      if (sessionStorage.getItem("id") == null) return
       if (this.$store.state.address.currentSelectId === "-1") {
         let params = `uid=${sessionStorage.getItem("id")}`
         this.axios.post("/morenAddress", params).then((res) => {

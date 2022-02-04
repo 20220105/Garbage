@@ -113,6 +113,11 @@ export default {
       }
       // 获取用户id
       let uid = sessionStorage.getItem("id")
+      if (uid == null) {
+        this.$toast.fail("检测到还未登录,请前往登录")
+        this.$router.push("/login")
+        return
+      }
       let params = `addressText=${temp.addressDetail}&uid=${uid}&name=${temp.name}&phone=${temp.tel}&areaCode=${temp.areaCode}`
       console.log(params, temp.id)
       if (this.id == undefined) {
@@ -129,6 +134,7 @@ export default {
               this.$router.go("-1")
             })
           }
+          this.$router.go("-1")
         })
       } else {
         params = `addressText=${temp.addressDetail}&name=${temp.name}&phone=${temp.tel}&areaCode=${temp.areaCode}&addressID=${this.initAddressInfo.id}`
@@ -151,6 +157,7 @@ export default {
       }
     },
     morenAddressID() {
+      if (sessionStorage.getItem("id") == null) return
       let params = `uid=${sessionStorage.getItem("id")}&`
       this.axios.post("/morenAddress", params).then((res) => {
         // console.log("res", res)

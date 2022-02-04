@@ -58,6 +58,7 @@ export default {
     },
     currentSelect() {
       // return this.$store.state.address.currentSelectId
+      if (sessionStorage.getItem("id") == null) return
       let params = `uid=${sessionStorage.getItem("id")}`
       this.axios.post("/searchAddress", params).then((res) => {
         // console.log(res)
