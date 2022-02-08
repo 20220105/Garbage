@@ -107,7 +107,7 @@ export default {
           let url = `/cancelOrder/${val}`
           this.axios.get(url).then((res) => {
             this.$toast.success("已取消订单")
-            this.onClick()
+            this.onClick(this.stateID - 1)
           })
         })
         .catch(() => {
