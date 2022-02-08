@@ -43,8 +43,8 @@ export default {
                 return false
             }
         },
-        checkPwd(){ //密码要求6位数字
-            let reg=/^\d{6}$/;
+        checkPwd(){ //密码要求
+            let reg=/^.{6,18}$/;
             if(reg.test(this.client_pwd)){ //验证成功
                 this.pwdState='smile-o'
                 return true
@@ -54,7 +54,7 @@ export default {
             }
         },
         checkRepwd(){
-            let reg=/^\d{6}$/;
+            let reg=/^.{6,18}$/;
             if(reg.test(this.repwd)&&this.client_pwd==this.repwd){ //验证成功
                 this.repwdState='smile-o'
                 return true
@@ -64,7 +64,7 @@ export default {
             }
         },
         checkNickName(){
-            let nls=/[\u4e00-\u9fa5]{6}/;
+            let nls=/^[\u4e00-\u9fa5]{2,6}&/;
             let sw=/([我|卧|倭|喔|沃]|wo)\s*([草|槽|曹|糙|嘈|漕|屮|艹|操])/
             if(!nls.test(this.nickname)&&!sw.test(this.nickname)){
                 this.nicknameState='smile-o'
@@ -75,7 +75,7 @@ export default {
             }
         },
         checkPhone(){
-            let reg=/1[3-9]\d{9}/
+            let reg=/^1[3-9]\d{9}$/
             if(reg.test(this.client_phone)){
                 this.phoneState='smile-o';
                 return true;

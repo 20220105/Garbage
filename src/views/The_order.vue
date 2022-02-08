@@ -1,12 +1,7 @@
 <template>
   <div>
-    <van-nav-bar
-      title="订单"
-      left-text="返回首页"
-      left-arrow
-      @click-left="onClickLeft"
-    ></van-nav-bar>
-    <o-tabs></o-tabs>
+    <van-nav-bar title="订单"></van-nav-bar>
+    <o-tabs :StateActive="this.$route.query.pageActive"></o-tabs>
     <!-- 底部导航栏 -->
     <van-tabbar
       class="bottom_nav"
@@ -17,10 +12,14 @@
       v-model="active"
     >
       <van-tabbar-item replace to="/" icon="wap-home">首页</van-tabbar-item>
-      <van-tabbar-item replace to="/" icon="column">订单</van-tabbar-item>
-      <van-tabbar-item replace to="/" icon="bell">一键预约</van-tabbar-item>
-      <van-tabbar-item replace to="/" icon="shop">商城</van-tabbar-item>
-      <van-tabbar-item replace to="/" icon="manager">我的</van-tabbar-item>
+      <van-tabbar-item replace to="/the_order" icon="column"
+        >订单</van-tabbar-item
+      >
+      <van-tabbar-item replace to="/subscribe" icon="bell"
+        >一键预约</van-tabbar-item
+      >
+      <van-tabbar-item replace to="/homepage" icon="shop">商城</van-tabbar-item>
+      <van-tabbar-item replace to="/me" icon="manager">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -33,17 +32,24 @@ export default {
   data() {
     return {
       active: 1,
+      pageActive: 3,
     }
   },
   methods: {
-    onClickLeft() {
-      this.$router.push("/")
+    getactive() {
+      // this.pageActive = this.$route.query.pageActive
+      // this.pageActive = this.pageActive
+      // console.log("状态", this.pageActive)
     },
+  },
+  mounted() {},
+  created() {
+    this.getactive()
   },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .van-nav-bar {
   background-color: #25c89b;
 }
@@ -55,5 +61,11 @@ export default {
 }
 ::v-deep .van-nav-bar__text {
   color: white;
+}
+// 底部导航栏
+::v-deep .bottom_nav {
+  .van-icon {
+    font-size: 1.65rem;
+  }
 }
 </style>

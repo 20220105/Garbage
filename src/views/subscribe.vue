@@ -155,7 +155,7 @@
                 :class="{ content: true, active: currentAddress != '' }"
                 @click="changeAddress"
               >
-              <!-- 三目运算符 -->
+                <!-- 三目运算符 -->
                 {{ currentAddress != "" ? currentAddress : "请选择预约地址" }}
               </div>
               <van-icon name="arrow" color="#c0c0c0" size="16px"></van-icon>
@@ -192,6 +192,7 @@
           size="large"
           :disabled="!allowSubmit"
           style="height: 50px"
+          @click="lijiYuyue"
         >
           {{ allowSubmit ? "立即预约" : "无法预约" }}
         </van-button>
@@ -228,6 +229,7 @@ import { WebServiceKey, JsApiKey } from "../utils/map.config"
 import WeightRange from "../components/WeightRange"
 // JS API结合Vue使用
 import AMapLoader from "@amap/amap-jsapi-loader"
+import moment from "moment"
 export default {
   components: {
     WeightRange,
@@ -293,15 +295,134 @@ export default {
       currentAddress: "", //当前填写的地址
       currentGeo: [], //当前填写的地址转换为经纬度,
       now: null, //时间选择器用的，用于初始化时间选择器的最小时间
+      temp: "",
+      collectorUsers: "",
+      collectorUsersId: "",
     }
   },
   mounted() {
+    this.huishouyuan()
     this.now = new Date()
     if (this.currentAddr) {
     } //不要删除这行，会出bug
   },
 
   methods: {
+    huishouyuan() {
+      if (sessionStorage.getItem("id") == null) return
+      // 加载回收员
+      this.axios.post("/collectorUsers").then((res) => {
+        // console.log(res)
+        this.collectorUsers = res.data.results
+        let IDs = []
+        for (const i in this.collectorUsers) {
+          IDs.push(Number(this.collectorUsers[i].collector_id))
+        }
+        this.collectorUsersId = IDs
+        let collectorUserID = IDs[Math.floor(Math.random() * IDs.length)]
+        this.collectorUsersId = collectorUserID
+        // console.log("回收员id", this.collectorUsersId)
+      })
+    },
+    lijiYuyue() {
+      // console.log(collectorUserID)
+      // console.log("类别", this.currentRecycle + 1)
+      // console.log("重量id", this.currentEstimateWeight + 1)
+      // console.log("上门时间", this.servicetime)
+      // console.log("地址", this.temp)
+      // console.log("备注", this.comment)
+      // console.log("回收员", this.collectorUsersId)
+
+      var outTradeNo = "" //订单号
+      for (var i = 0; i < 5; i++) {
+        //6位随机数，用以加在时间戳后面。
+        outTradeNo += Math.floor(Math.random() * 10)
+      }
+      // 订单号首字母
+      let arr = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+      ]
+      let idvalue = arr[Math.floor(Math.random() * 52)]
+      outTradeNo = idvalue + new Date().getTime() + outTradeNo //时间戳，用来生成订单号。
+      // console.log('订单号',outTradeNo)
+
+      // 预约时间处理
+      let date = moment(this.servicetime).format("YYYY-MM-DD HH:mm:ss")
+
+      console.log("temp", this.temp)
+
+      // 预约添加数据
+      let params = `orderNum=${outTradeNo}
+      &uid=${sessionStorage.getItem("id")}
+      &collectorId=${this.collectorUsersId}
+      &orderCompleteTime=${date}
+      &wId=${this.currentEstimateWeight + 1}
+      &sortChoiceId=${this.currentRecycle + 1}
+      &address=${this.temp.address}
+      &addressId=${this.temp.id}
+      &note=${this.comment}`
+
+      // console.log(params)
+      this.axios.post("/EditOrder", params).then((res) => {
+        console.log(res)
+        this.$toast.success("预约订单成功")
+        this.$router.push({
+          path: "/orderDetails",
+          query: { orderID: res.data.results.insertId },
+        })
+      })
+    },
     initMap() {
       AMapLoader.load({
         key: JsApiKey,
@@ -414,14 +535,38 @@ export default {
       )
     },
     currentAddr() {
+      // console.log("a", this.$store.state.address)
+      if (sessionStorage.getItem("id") == null) return
       if (this.$store.state.address.currentSelectId === "-1") {
-        return ""
+        let params = `uid=${sessionStorage.getItem("id")}`
+        this.axios.post("/morenAddress", params).then((res) => {
+          let list = res.data.result
+          console.log(list)
+          let temp = {
+            id: !list ? "" : list.address_id,
+            tel: !list ? "" : list.phone,
+            name: !list ? "" : list.name,
+            address: !list ? "" : list.address_text,
+            isDefault: !list ? "" : list.ismoren,
+            addressDetail: !list ? "" : list.address_text,
+            areaCode: !list ? "" : list.areaCode,
+            city: "",
+            county: "",
+            postalCode: !list ? "" : list.areaCode,
+            province: "",
+          }
+          this.temp = temp
+          console.log("temp", this.temp)
+          let addr =
+            temp.province + temp.city + temp.county + temp.addressDetail
+          this.currentAddress = addr
+        })
       } else {
-        let temp =
-          this.$store.state.address.address[
-            Number.parseInt(this.$store.state.address.currentSelectId)
-          ]
+        let temp = this.$store.state.address.currentSelectId
+        this.temp = temp
+        console.log("temp", this.temp)
         let addr = temp.province + temp.city + temp.county + temp.addressDetail
+        // console.log(addr)
         this.currentAddress = addr
         return addr
       }

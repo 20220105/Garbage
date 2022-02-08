@@ -1,32 +1,46 @@
 <template>
   <div>
-    <van-tabs swipeable animated>
+    <van-tabs animated v-model="active" @click="onClick">
       <van-tab
-        v-model="active"
-        v-for="index in 8"
+        v-for="(item, index) in states"
         :key="index"
-        :title="'标签 ' + index"
+        :title="item.state_name"
+        :name="index"
       >
-        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-          <p>刷新次数: {{ count }}</p>
-          
-          <van-empty
-            class="custom-image"
-            image="/暂无订单.png"
-            description="暂无订单"
-            v-if="dd"
-          />
-          <van-address-list
-            v-model="chosenAddressId"
-            :list="list"
-            :disabled-list="disabledList"
-            disabled-text="以下地址超出配送范围"
-            default-tag-text="默认"
-            @add="onAdd"
-            @edit="onEdit"
-            v-else
-          />
-        </van-pull-refresh>
+        <!--  -->
+        <template v-if="orders.length != 0">
+          <van-swipe-cell v-for="(order, i) in orders" :key="i">
+            <van-cell
+              :border="false"
+              :title="order.sortChoice + '/' + order.w_range"
+              :value="`联系电话:${order.collector_phone}`"
+              :to="{
+                path: '/orderDetails',
+                query: { orderID: order.order_id },
+              }"
+            >
+              <template #label>
+                {{ order.order_num }}&nbsp;&nbsp;{{
+                  order.state_name
+                }}</template
+              >
+            </van-cell>
+            <template #right v-if="order.state_id * 1 != 7">
+              <van-button
+                square
+                type="danger"
+                text="取消订单"
+                @click="cancelOrder(order.order_id, order.state_name)"
+              />
+            </template>
+            <template #right v-else>
+              <van-button disabled square type="danger" text="已取消订单" />
+            </template>
+          </van-swipe-cell>
+        </template>
+        <div v-else-if="orders.length == 0">
+          <van-empty description="暂无订单" />
+        </div>
       </van-tab>
     </van-tabs>
   </div>
@@ -34,53 +48,77 @@
 
 <script>
 export default {
+  props: ["StateActive"],
   data() {
     return {
-      dd:false,
-      count: 0,
-      isLoading: true,
-      chosenAddressId: "1",
-      list: [
-        {
-          id: "1",
-          name: "张三",
-          tel: "13000000000",
-          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
-          isDefault: true,
-        },
-        {
-          id: "2",
-          name: "李四",
-          tel: "1310000000",
-          address: "浙江省杭州市拱墅区莫干山路 50 号",
-        },
-      ],
-      disabledList: [
-        {
-          id: "3",
-          name: "王五",
-          tel: "1320000000",
-          address: "浙江省杭州市滨江区江南大道 15 号",
-        },
-      ],
-    };
+      states: "",
+      stateID: "",
+      active: "",
+      orders: "",
+    }
   },
   methods: {
-    onRefresh() {
-      setTimeout(() => {
-        this.$toast("刷新成功");
-        this.isLoading = false;
-        this.count++;
-      }, 1000);
+    getState() {
+      let uid = sessionStorage.getItem("id")
+      // console.log("uid", uid)
+      if (this.StateActive == undefined || this.StateActive == 0) {
+        this.active = 0
+        this.stateID = ""
+      } else {
+        this.active = this.StateActive * 1
+        this.stateID = this.active + 1
+      }
+      // console.log("状态参数", this.StateActive)
+      // console.log("是否修改值", this.active)
+      this.axios.get("/getState").then((res) => {
+        this.states = res.data.results
+        // console.log(this.states)
+      })
+
+      let params = `uid=${uid}&stateId=${this.stateID}`
+      this.axios.post("/search_orders", params).then((res) => {
+        this.orders = res.data.results
+        // console.log(this.orders)
+      })
     },
-    onAdd() {
-      Toast("新增地址");
+    onClick(name, title) {
+      // console.log(name, title)
+      if (name == 0) {
+        this.stateID = ""
+      } else {
+        this.stateID = name + 1
+      }
+      // console.log("stateID", this.stateID)
+      let uid = sessionStorage.getItem("id")
+      let params = `uid=${uid}&stateId=${this.stateID}`
+      this.axios.post("/search_orders", params).then((res) => {
+        this.orders = res.data.results
+        // console.log(this.orders)
+      })
     },
-    onEdit(item, index) {
-      Toast("编辑地址:" + index);
+    cancelOrder(val, state) {
+      this.$dialog
+        .confirm({
+          title: "取消订单",
+          message: `该订单${state},是否确认取消订单,如操作失误请点击取消`,
+        })
+        .then(() => {
+          // console.log(val)
+          let url = `/cancelOrder/${val}`
+          this.axios.get(url).then((res) => {
+            this.$toast.success("已取消订单")
+            this.onClick()
+          })
+        })
+        .catch(() => {
+          this.$toast("已取消该操作")
+        })
     },
   },
-};
+  mounted() {
+    this.getState()
+  },
+}
 </script>
 
 <style scoped>
@@ -93,5 +131,8 @@ export default {
 }
 ::v-deep .van-empty__description {
   margin-top: 8em;
+}
+::v-deep .van-empty__image img {
+  height: 100% !important;
 }
 </style>

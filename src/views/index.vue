@@ -38,7 +38,7 @@
         <van-icon name="shop" size="2.3rem" color="#fac43a" />
         <span>环保商城</span>
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/the_order">
         <van-icon name="balance-list" size="2.3rem" color="#75e7a2" />
         <span>预约订单</span>
       </van-grid-item>
@@ -247,11 +247,11 @@ export default {
     },
     getuser() {
       let id = sessionStorage.getItem("id")
+      if (id == null) return
       this.userId = id
       let url = `/money_amoun/${id}`
       this.axios.get(url).then((res) => {
         this.money = res.data.results[0]
-        console.log(this.money)
       })
     },
   },

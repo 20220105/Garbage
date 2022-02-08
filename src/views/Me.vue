@@ -82,19 +82,25 @@
           color="#25c89b"
         />
         <van-grid :border="false" :column-num="4">
-          <van-grid-item class="left">
+          <van-grid-item
+            class="left"
+            :to="{ path: '/the_order', query: { pageActive: 0 } }"
+          >
             <van-icon name="todo-list" size="2.3rem" color="#75e7a2" />
             <span>全部预约</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item :to="{ path: '/the_order', query: { pageActive: 1 } }">
             <van-icon name="smile-comment" size="2.3rem" color="#75e7a2" />
             <span>待服务</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item :to="{ path: '/the_order', query: { pageActive: 3 } }">
             <van-icon name="clock" size="2.3rem" color="#75e7a2" />
             <span>已称重</span>
           </van-grid-item>
-          <van-grid-item class="right">
+          <van-grid-item
+            class="right"
+            :to="{ path: '/the_order', query: { pageActive: 6 } }"
+          >
             <van-icon name="clear" size="2.3rem" color="#75e7a2" />
             <span>已取消</span>
           </van-grid-item>
@@ -234,6 +240,7 @@ export default {
     // },
     getuser() {
       let id = sessionStorage.getItem("id")
+      if (id == null) return
       this.userId = id
       let url = `/money_amoun/${id}`
       this.axios.get(url).then((res) => {
