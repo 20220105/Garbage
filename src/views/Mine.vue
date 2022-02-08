@@ -284,7 +284,7 @@ export default {
   text-align: center;
 }
 .van-tabbar-item {
-  color: #fff;
+  color: rgb(92, 92, 92);
 }
 .click_login,
 .islogin {

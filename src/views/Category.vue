@@ -2,7 +2,7 @@
   <div>
     <!-- 侧边栏 -->
     <van-nav-bar
-      title="测试分类1"
+      title="更多"
       fixed
       placeholder
       left-arrow

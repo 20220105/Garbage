@@ -5,6 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: "/cart",
+    name: "Cart",
+    component: () => import("../views/Cart.vue"),
+  },
+  {
     path: "/orderDetails",
     name: "OrderDetails",
     component: () => import("../views/OrderDetails.vue"),
@@ -132,7 +137,7 @@ const routes = [
   {
     path: "/",
     name: "Index",
-    component: () => import("../views/index.vue"),
+    component: () => import("../views/Index.vue"),
   },
   {
     path: "/recyclingGuide",
@@ -142,7 +147,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
   routes,
 })

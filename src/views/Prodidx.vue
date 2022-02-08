@@ -75,41 +75,42 @@
       </van-col>
     </van-row>
     <!-- 底部导航 -->
-    <van-action-bar>
-      <van-action-bar-icon icon="shop-o" text="店铺" />
-      <van-action-bar-icon
-        icon="star"
+    <van-goods-action>
+      <van-goods-action-icon icon="chat-o" text="客服" color="#ee0a24" />
+      <van-goods-action-icon
         v-show="blnCollect"
-        color="red"
         @click="collect()"
-        text="取消"
-      />
-      <van-action-bar-icon
         icon="star"
+        text="收藏"
+        color="#ff5000"
+      />
+      <van-goods-action-icon
         v-show="!blnCollect"
         @click="collect()"
-        text="收藏"
+        icon="star"
+        text="已收藏"
+        color="#ff5000"
       />
-      <van-action-bar-icon
-        icon="cart-o"
+      <van-goods-action-icon
         @click="url()"
         v-show="cart.length == 0"
+        icon="cart-o"
         text="购物车"
       />
-      <van-action-bar-icon
-        icon="cart-o"
-        @click="url()"
+      <van-goods-action-icon
         v-show="cart.length != 0"
         :badge="cart.length"
+        @click="url()"
+        icon="cart-o"
         text="购物车"
       />
-      <van-action-bar-button
+      <van-goods-action-button
         @click="addCart"
         type="warning"
         text="加入购物车"
       />
-      <van-action-bar-button type="danger" text="提交订单" />
-    </van-action-bar>
+      <van-goods-action-button type="danger" text="立即购买" />
+    </van-goods-action>
   </div>
 </template>
 
@@ -133,7 +134,7 @@ export default {
     };
   },
   methods: {
-        onClickLeft() {
+    onClickLeft() {
       this.$router.go(-1);
     },
     collect() {
