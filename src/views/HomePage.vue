@@ -31,7 +31,7 @@
           width="23.5rem"
           height="10rem"
           fit="cover"
-          src="https://img.zcool.cn/community/01155261dfe3fe11013f01cd7b2ca2.jpg@1280w_1l_2o_100sh.jpg"
+          src="https://img.zcool.cn/community/01a05060ebac6911013eaf7015b31f.jpg@1280w_1l_2o_100sh.jpg"
       /></van-swipe-item>
       <van-swipe-item>
         <van-image
@@ -142,6 +142,7 @@ export default {
     },
     onClickLeft() {
       this.$router.push("/");
+      
     },
     onClickRight() {
       Toast("按钮");
