@@ -50,7 +50,9 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.go(-1)
+      this.$router.push("/me")
+      this.$router.go("0")
+      this.$router.go("0")
     },
     afterRead(file) {
       this.$toast.loading({
