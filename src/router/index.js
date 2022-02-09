@@ -6,7 +6,6 @@ Vue.use(VueRouter)
 const routes = [
 
   {
-
     path: "/cart",
     name: "Cart",
     component: () => import("../views/Cart.vue"),
