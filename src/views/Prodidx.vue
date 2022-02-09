@@ -69,20 +69,22 @@
             </div>
           </van-tab>
           <van-tab title="参数">
-            <div class="right" v-html="strRight"></div>
+            <div class="right" v-html="strRight">
+              <!-- <pre>{{strRight}}</pre> 保持原有标签pre ,即上方的v-html有意义的效果 -->
+            </div>
           </van-tab>
         </van-tabs>
       </van-col>
     </van-row>
     <!-- 底部导航 -->
-    <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服" color="#ee0a24" />
+    <van-goods-action v-model="active" >
+      <van-goods-action-icon icon="chat-o" text="客服"  />
       <van-goods-action-icon
         v-show="blnCollect"
         @click="collect()"
         icon="star"
         text="收藏"
-        color="#ff5000"
+        
       />
       <van-goods-action-icon
         v-show="!blnCollect"
@@ -120,6 +122,7 @@ let home = data.data.home;
 export default {
   data() {
     return {
+      active:[],
       images: [],
       curData: [],
       blnCollect: false,
@@ -212,7 +215,8 @@ export default {
     },
   },
   mounted: function () {
-    let _id = this.$router.currentRoute._value.query.id;
+    // console.log(this.$router.currentRoute.query.id);   //查看进入的位置 即prodidx?id=1 等等
+    let _id = this.$router.currentRoute.query.id;  //dom下的query里包含的id值,即为跳转的位置
     let _prodData = home.filter((item) => {
       return item.id == _id;
     });
