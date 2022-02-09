@@ -12,13 +12,8 @@
     <ul class="cart">
       <li v-for="(item, index) in cart" :key="index">
         <van-checkbox v-model="item.checked" icon-size="24px" />
-        <van-image
-          width="100px"
-          fit="cover"
-          src="https://img01.yzcdn.cn/vant/ipad.jpeg"
-          
-        />
-        
+        <van-image width="100px" fit="cover" :src="require('@/static/img/prod/p_01.webp')" />
+
         <div class="price">
           <h3>{{ item.title }}</h3>
           <p>{{ item.price }}</p>
@@ -28,11 +23,12 @@
             <span @click="add(index)">+</span>
           </div>
         </div>
+        <!-- 删除 -->
         <van-icon @click="dele(index)" name="delete-o" size="20px" />
       </li>
     </ul>
     <!-- 购物车为空时的提示信息 -->
-    <div class="error" v-show="cart.length == 0">当前你的购物车为空！</div>
+    <div class="error" v-show="cart.length == 0">当前你的购物车为空!</div>
     <!-- 添加合计的导航栏 -->
     <van-goods-action v-show="cart.length != 0">
       <van-checkbox
@@ -44,23 +40,29 @@
         全选 <span v-show="false">{{ (allchecked = getAllChecked) }}</span>
       </van-checkbox>
       <span class="sum">
-        合计：<span>￥{{ getSumPrice }}</span>
+        合计:<span>￥{{ getSumPrice }}</span>
       </span>
-        <van-goods-action-button
-    type="danger"
-    text="立即结算"
-    @click="onClickButton"
-  />
+      <van-goods-action-button
+        type="danger"
+        text="立即结算"
+        @click="onClickButton"
+      />
     </van-goods-action>
   </div>
 </template>
 <script>
+import { Dialog } from 'vant';
+
+
 export default {
+  
   data() {
     return {
+      // imgs:require("@/static/img/prod/" + item.imgurl),
+      // imgs: require("@/static/img/prod/p_01.webp"),
       allchecked: false,
       num: 1,
-        checked: true,
+      checked: true,
       cart: localStorage.getItem("cart")
         ? JSON.parse(localStorage.getItem("cart"))
         : [],
@@ -87,13 +89,13 @@ export default {
     },
   },
   methods: {
-        onClickIcon() {
-      Toast('点击图标');
+    onClickIcon() {
+      Toast("点击图标");
     },
     onClickButton() {
-      Toast('点击按钮');
+      Toast("点击按钮");
     },
-        onClickLeft() {
+    onClickLeft() {
       this.$router.go(-1);
     },
     onAllchecked() {

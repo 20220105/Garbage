@@ -4,12 +4,14 @@ import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
 const routes = [
+
   {
-<<<<<<< HEAD
+
     path: "/cart",
     name: "Cart",
     component: () => import("../views/Cart.vue"),
-=======
+  },
+  {
     path: "/orderDetails",
     name: "OrderDetails",
     component: () => import("../views/OrderDetails.vue"),
@@ -18,7 +20,7 @@ const routes = [
     path: "/updatePwd",
     name: "UpdatePwd",
     component: () => import("../views/UpdatePwd.vue"),
->>>>>>> 07793e399b688c69d7a45b9f41c05a6c8ad229fb
+
   },
   {
     path: "/personal",

@@ -22,13 +22,13 @@
         <!-- 筛选结束 -->
         <!-- 商品列表开始 -->
         <div class="goodsmain">
-          <router-link :to="`/details?gid=${item.gid}`" v-for="(item,index) in results" :key="index">
+          <router-link :to="`/details?gid=${item.gid}`" v-for="(item2,index2) in results" :key="index2">
             <div>
-              <img :src="`/img/two/${item.img}`">
+             <img :src="require('../static/img/prod/' + item2.homeImg)" alt="" />
               <p>
-                <span>{{item.goodlevel}}·</span>
-                <span>{{item.brand}} </span>
-                <span>{{item.title}}</span>
+                <span>{{item2.homeName}}·</span>
+                <span>{{item2.homeNametwo}} </span>
+                <span>{{item2.homePrice}}</span>
               </p>
               <span>&nbsp;&nbsp;{{item.nprice}} </span>
               <span>市场价￥</span>
@@ -43,10 +43,12 @@
 </template>
 
 <script>
+import data from "../static/data.json";
 export default {
   data() {
     return {
-      results:[],
+      value:"",
+      results:data.data.results,
     };
   },
   methods: {
