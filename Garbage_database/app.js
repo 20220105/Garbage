@@ -94,8 +94,8 @@ const Core = require('@alicloud/pop-core')
 
 server.post('/gcs', (req, res, next) => {
   var client = new Core({
-    accessKeyId: '',
-    accessKeySecret: '',
+    accessKeyId: 'LTAI5t72XWixQmNQQe1kd3a1',
+    accessKeySecret: 'Zo2OJomGKnQvSmX62MX8afSVGf2inR',
     // securityToken: '<your-sts-token>', // use STS Token
     endpoint: 'https://imagerecog.cn-shanghai.aliyuncs.com',
     apiVersion: '2019-09-30',
@@ -149,8 +149,8 @@ server.post('/get_sms', function (req, res, next) {
 
   //初始化sms_client
   let smsClient = new SMSClient({
-    accessKeyId: '', //accessKeyId 前面提到要准备的
-    secretAccessKey: '', //secretAccessKey 前面提到要准备的
+    accessKeyId: 'LTAI5tDyXi7VK3DgbyCXPRkr', //accessKeyId 前面提到要准备的
+    secretAccessKey: 'k0svqcKyezfySP4CfiQrTmLGj5f4Kl', //secretAccessKey 前面提到要准备的
   })
 
   // 调用6位随机数方法
